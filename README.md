@@ -1,5 +1,7 @@
 # Brilliant CMake
 
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/dvd0bvb)
+
 ### A CMake project template
 
 Supports building a C++ project as an executable, library binary, or header only library.
