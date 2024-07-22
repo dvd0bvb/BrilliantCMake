@@ -11,7 +11,8 @@ jobs:
     runs-on: ubuntu-24.04
 
     steps:
-    - uses: picanumber/sanitizer_workflows/.github/workflows/asan.yml@main
+    - name: asan
+      uses: picanumber/sanitizer_workflows/.github/workflows/asan.yml@main
       with:
         testDir: 'test'
         compiler_package: 'g++-13'
