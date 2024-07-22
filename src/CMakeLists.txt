@@ -2,6 +2,7 @@
 set(MAIN_TARGET_SOURCES
     # source 1
     # ... 
+    project.cpp
 )
 
 if (${PROJECT_NAME}_BUILD_EXECUTABLE)

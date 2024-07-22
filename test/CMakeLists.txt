@@ -4,6 +4,7 @@ set(TEST_TARGET ${PROJECT_NAME}_TEST)
 set(TEST_SOURCES
     # source 1
     # ...
+    test.cpp
 )
 set(TEST_DEPENDENCIES
     # dep 1

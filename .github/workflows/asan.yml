@@ -1,0 +1,14 @@
+name: Memory
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  address_sanitizer:
+    uses: picanumber/sanitizer_workflows/.github/workflows/asan.yml@main
+    with: 
+        compiler_package: 'g++-13'
+        compiler_name: 'g++-13'
