@@ -1,23 +1,28 @@
 include(${CMAKE_SOURCE_DIR}/cmake/CompilerOptions.cmake)
 
+set(GCC_ASAN_FLAGS "-fsanitize=address;-fno-omit-frame-pointer")
+
 set(ASAN_FLAGS
     "$<$<CONFIG:DEBUG>:
         $<${MSVCISH}:/fsanitize=address>
-        $<$<OR:${GCCISH}, ${CLANGISH}>:-fsanitize=address;-fno-omit-frame-pointer>
+        $<${GCCISH}:${GCC_ASAN_FLAGS}>
+        $<${CLANGISH}:${GCC_ASAN_FLAGS}>
     >"
 )
 
 set(TSAN_FLAGS
     "$<$<CONFIG:DEBUG>:
         $<${MSVCISH}:/fsanitize=thread>
-        $<$<OR:${GCCISH}, ${CLANGISH}>:-fsanitize=thread>
+        <${GCCISH}:-fsanitize=thread>
+        <${CLANGISH}:-fsanitize=thread>
     >"
 )
 
 set(UBSAN_FLAGS
     "$<$<CONFIG:DEBUG>:
         $<${MSVCISH}:/fsanitize=undefined>
-        $<$<OR:${GCCISH}, ${CLANGISH}>:-fsanitize=undefined>
+        <${GCCISH}:-fsanitize=undefined>
+        <${CLANGISH}:-fsanitize=undefined>
     >"
 )
 
