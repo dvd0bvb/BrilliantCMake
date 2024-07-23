@@ -8,6 +8,6 @@ on:
 
 jobs:
   address_sanitizer:
-    uses: sanitizer.yml@main
+    uses: ./.github/workflows/sanitizer.yml@main
     with:
       type: ASAN
