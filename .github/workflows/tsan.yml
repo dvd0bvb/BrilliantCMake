@@ -1,4 +1,4 @@
-name: Threading
+name: Thread Sanitizer
 
 on:
   push:
@@ -7,8 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  thread_sanitizer:
-    uses: picanumber/sanitizer_workflows/.github/workflows/tsan.yml@main  
-    with: 
-        compiler_package: 'g++-13'
-        compiler_name: 'g++-13'
+  address_sanitizer:
+    uses: ./.github/workflows/sanitizer.yml
+    with:
+      type: TSAN

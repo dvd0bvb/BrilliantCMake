@@ -1,4 +1,4 @@
-name: ASAN, UBSAN, LSAN
+name: Memory Sanitizer
 
 on:
   push:
@@ -10,4 +10,4 @@ jobs:
   address_sanitizer:
     uses: ./.github/workflows/sanitizer.yml
     with:
-      type: ASAN
+      type: MSAN
