@@ -8,12 +8,6 @@ on:
 
 jobs:
   address_sanitizer:
-    runs-on: ubuntu-24.04
-
-    steps:
-    - name: asan
-      uses: picanumber/sanitizer_workflows/.github/workflows/asan.yml@main
-      with:
-        testDir: 'test'
-        compiler_package: 'g++-13'
-        compiler_name: 'g++-13'
+    uses: sanitizer.yml
+    with:
+      type: ASAN

@@ -14,8 +14,7 @@ set(TEST_DEPENDENCIES
 
 add_executable(
     ${TEST_TARGET}
-    EXCLUDE_FROM_ALL # use the test target
-        ${TEST_SOURCES}
+    ${TEST_SOURCES}
 )
 
 target_include_directories(
@@ -49,3 +48,6 @@ target_link_libraries(
 )
 
 gtest_discover_tests(${TEST_TARGET})
+
+include(${CMAKE_SOURCE_DIR}/cmake/SanitizerOptions.cmake)
+set_sanitizer_options(${TEST_TARGET})
