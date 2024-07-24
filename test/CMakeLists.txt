@@ -36,6 +36,8 @@ target_compile_options(
         ${PROJECT_WARNINGS}
 )
 
+set_property(TARGET ${TEST_TARGET} PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+
 find_package(GTest REQUIRED)
 # TODO: Add other find_package calls here
 
