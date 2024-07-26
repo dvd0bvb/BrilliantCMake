@@ -50,7 +50,7 @@ jobs:
     - uses: ./.github/actions/install-gtest
       with:
         build-type: ${{ matrix.build_type }}
-        dynmamic-msvc-runtime: true
+        dynamic-msvc-runtime: true
 
     - if: ${{ matrix.cpp_compiler == 'clang++' }}
       run: sudo apt update && sudo apt install -y libc++-dev libc++abi-dev
