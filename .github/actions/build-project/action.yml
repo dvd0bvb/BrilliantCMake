@@ -13,7 +13,10 @@ inputs:
     required: true
   build-type:
     description: Build type
-    required: true
+    required: 
+defaults:
+  run:
+    shell: bash
 runs:
   using: "composite"  
   steps:
