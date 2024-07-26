@@ -1,0 +1,52 @@
+name: Build Project
+description: Build a CMake project
+author: David Brill (dvd0bvb)
+
+inputs:
+  inputs:
+    project-name: The project name
+    required: true
+  c-compiler:
+    description: The C compiler being used
+    required: true
+  cpp-compiler:
+    description: The CXX compiler being used
+    required: true
+  build-type:
+    description: Build type
+    required: true
+run:
+  using: "composite"
+  
+  - name: Install gtest 
+    uses: ./.github/actions/install-gtest
+    with:
+      build-type: ${{ inputs.build-type }}
+      dynamic-msvc-runtime: "true"
+
+  - name: Checkout source
+    uses: actions/checkout@v4
+  
+  steps:
+    - if: inputs.compiler == 'clang++'
+      run: sudo apt update && sudo apt install -y libc++-dev libc++abi-dev
+      
+    - name: Configure CMake
+      # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
+      # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
+      run: >
+        cmake -B ${{ github.workspace }}/build
+        -DCMAKE_CXX_COMPILER=${{ inputs.cpp-compiler }}
+        -DCMAKE_C_COMPILER=${{ inputs.c-compiler }}
+        -DCMAKE_BUILD_TYPE=${{ inputs.build-type }}
+        -S ${{ github.workspace }}
+
+    - name: Build
+      # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
+      run: cmake --build ${{ github.workspace }}/build --config ${{ inputs.build-type }} --target ${{ inputs.project-name }}_TEST
+
+    - name: Test
+      working-directory: ${{ github.workspace }}/build
+      # Execute tests defined by the CMake configuration. Note that --build-config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
+      # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
+      run: ctest --build-config ${{ inputs.build-type }}
