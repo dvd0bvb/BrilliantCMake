@@ -25,6 +25,7 @@ runs:
       id: msan-flags
       if: inputs.with-msan == 'true'
       run: echo "flags=-fsanitize=memory -stdlib=libc++ -L/path/to/libcxx_msan/lib -lc++abi -I/path/to/libcxx_msan/include -I/path/to/libcxx_msan/include/c++/v1" >> $GITHUB_OUTPUT
+      shell: bash
 
     - name: Build and install gtest
       if: runner.os != 'Windows'
