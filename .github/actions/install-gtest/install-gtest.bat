@@ -1,4 +1,4 @@
-@echo off
+
 setlocal enabledelayedexpansion
 
 set BRANCH=%1
@@ -10,6 +10,7 @@ pushd googletest
 mkdir build
 pushd build
 
+echo %DYNAMIC_RUNTIME%
 if %DYNAMIC_RUNTIME%=="true" (
     set RUNTIME_FLAG="-Dgtest_forced_shared_crt"
 ) else (
