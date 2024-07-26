@@ -28,12 +28,15 @@ jobs:
           - os: windows-latest
             c_compiler: cl
             cpp_compiler: cl
+            shell: pwsh
           - os: ubuntu-24.04
             c_compiler: gcc
             cpp_compiler: g++
+            shell: bash
           - os: ubuntu-24.04
             c_compiler: clang
             cpp_compiler: clang++
+            shell: bash
         exclude:
           - os: windows-latest
             c_compiler: gcc
@@ -51,3 +54,4 @@ jobs:
         c-compiler: ${{ matrix.c_compiler }}
         cpp-compiler: ${{ matrix.cpp_compiler }}
         build-type: ${{ matrix.build_type }}
+        shell-name: ${{ matrix.shell }}

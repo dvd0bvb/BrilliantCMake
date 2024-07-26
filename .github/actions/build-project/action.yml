@@ -13,7 +13,10 @@ inputs:
     required: true
   build-type:
     description: Build type
-    required: 
+    required: true
+  shell-name:
+    description: The shell to run commands in
+    required: true
 defaults:
   run:
     shell: bash
@@ -27,9 +30,11 @@ runs:
         dynamic-msvc-runtime: "true"
 
     - if: inputs.compiler == 'clang++'
+      shell: ${{ inputs.shell-name }}
       run: sudo apt update && sudo apt install -y libc++-dev libc++abi-dev
       
     - name: Configure CMake
+      shell: ${{ inputs.shell-name }}
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
       run: >
@@ -40,11 +45,13 @@ runs:
         -S ${{ runner.workspace }}
 
     - name: Build
+      shell: ${{ inputs.shell-name }}
       # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
       run: cmake --build ${{ runner.workspace }}/build --config ${{ inputs.build-type }} --target ${{ inputs.project-name }}_TEST
 
     - name: Test
       working-directory: ${{ runner.workspace }}/build
+      shell: ${{ inputs.shell-name }}
       # Execute tests defined by the CMake configuration. Note that --build-config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
       run: ctest --build-config ${{ inputs.build-type }}
