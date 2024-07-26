@@ -8,6 +8,25 @@ on:
 
 jobs:
   address_sanitizer:
-    uses: ./.github/workflows/sanitizer.yml
-    with:
-      type: MSAN
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-24.04]
+        build_type: [Debug]
+        c_compiler: [clang]
+        include:
+          - os: ubuntu-24.04
+            c_compiler: clang
+            cpp_compiler: clang++
+            shell: bash
+    
+    steps:
+    - uses: actions/checkout@v4
+    - uses: ./.github/actions/build-project
+      with: 
+        project-name: "project"
+        c-compiler: ${{ matrix.c_compiler }}
+        cpp-compiler: ${{ matrix.cpp_compiler }}
+        build-type: ${{ matrix.build_type }}
+        shell-name: ${{ matrix.shell }}
+        cmake-config-args: -DSANITIZER=MSAN

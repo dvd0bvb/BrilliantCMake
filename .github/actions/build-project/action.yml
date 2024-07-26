@@ -20,9 +20,6 @@ inputs:
   cmake-config-args:
     description: Additional arguments for Cmake config step
     required: false
-defaults:
-  run:
-    shell: bash
 runs:
   using: "composite"  
   steps:
