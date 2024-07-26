@@ -1,3 +1,7 @@
+include(${CMAKE_SOURCE_DIR}/cmake/CompilerOptions.cmake)
+include(${CMAKE_SOURCE_DIR}/cmake/SanitizerOptions.cmake)
+include(${CMAKE_SOURCE_DIR}/cmake/MsvcRuntime.cmake)
+
 set(TEST_TARGET ${PROJECT_NAME}_TEST)
 
 # TODO: add sources and dependencies here 
@@ -29,14 +33,13 @@ target_compile_features(
         ${THIS_CXX_VERSION}
 )
 
-include(${CMAKE_SOURCE_DIR}/cmake/CompilerOptions.cmake)
 target_compile_options(
     ${TEST_TARGET}
     PRIVATE 
         ${PROJECT_WARNINGS}
 )
-
-set_property(TARGET ${TEST_TARGET} PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
+set_sanitizer_options(${TEST_TARGET})
+set_msvc_runtime(${TEST_TARGET})
 
 find_package(GTest REQUIRED)
 # TODO: Add other find_package calls here
@@ -50,6 +53,3 @@ target_link_libraries(
 )
 
 gtest_discover_tests(${TEST_TARGET})
-
-include(${CMAKE_SOURCE_DIR}/cmake/SanitizerOptions.cmake)
-set_sanitizer_options(${TEST_TARGET})

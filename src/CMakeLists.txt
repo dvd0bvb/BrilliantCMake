@@ -1,3 +1,6 @@
+include(${CMAKE_SOURCE_DIR}/cmake/CompilerOptions.cmake)
+include(${CMAKE_SOURCE_DIR}/cmake/MsvcRuntime.cmake)
+
 # TODO: set the sources
 set(MAIN_TARGET_SOURCES
     # source 1
@@ -29,12 +32,13 @@ target_compile_features(
         ${THIS_CXX_VERSION}
 )
 
-include(${CMAKE_SOURCE_DIR}/cmake/CompilerOptions.cmake)
 target_compile_options(
     ${PROJECT_NAME}
     PRIVATE 
         ${PROJECT_WARNINGS}
 )
+
+set_msvc_runtime(${PROJECT_NAME})
 
 # TODO: add dependencies
 # find_package(NAME REQUIRED [options])

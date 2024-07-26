@@ -1,0 +1,20 @@
+@echo off
+setlocal enabledelayedexpansion
+
+set BRANCH=%1
+set BUILD_TYPE=%2
+set DYNAMIC_RUNTIME=%3
+
+git clone https://github.com/google/googletest.git --branch %BRANCH% --depth 1
+pushd googletest
+mkdir build
+pushd build
+
+if %DYNAMIC_RUNTIME%=="true" (
+    set RUNTIME_FLAG="-Dgtest_forced_shared_crt"
+) else (
+    set RUNTIME_FLAG=" "
+)
+cmake .. -DCMAKE_BUILD_TYPE=%BUILD_TYPE% -G "NMake Makefiles" %RUNTIME_FLAG%
+cmake --build .
+cmake --install .

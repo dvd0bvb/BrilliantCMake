@@ -47,9 +47,10 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: ilammy/msvc-dev-cmd@v1
-    - uses: Bacondish2023/setup-googletest@v1
+    - uses: ./.github/actions/install-gtest
       with:
-        tag: v1.14.0
+        build-type: ${{ matrix.build_type }}
+        dynmamic-msvc-runtime: true
 
     - if: ${{ matrix.cpp_compiler == 'clang++' }}
       run: sudo apt update && sudo apt install -y libc++-dev libc++abi-dev

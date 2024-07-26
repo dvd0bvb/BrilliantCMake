@@ -1,0 +1,28 @@
+name: Install GTest
+description: Install GTest for your platform
+author: David Brill (dvd0bvb)
+inputs:
+  tag:
+    description: Tag or branch name. Default is main.
+    required: false
+    default: main
+  build-type:
+    description: Build type
+    required: false
+    default: Release
+  dynamic-msvc-runtime:
+    description: Link the msvc runtime dynamically (default, MD) or statically (MT)
+    required: false
+    default: true
+runs: 
+  using: "composite"
+  steps:
+    - name: build and install gtest
+      if: runner.os != 'Windows'
+      run: .github/actions/install-gtest.sh ${{ inputs.tag }} ${{ inputs.build-type }}
+      shell: bash
+    
+    - name:
+      if: runner.os == 'Windows'
+      run: .github/actions/install-gtest.bat ${{ inputs.tag }} ${{ inputs.build-type }} ${{ inputs.shared-msvc-runtime }}
+      shell: pwsh
