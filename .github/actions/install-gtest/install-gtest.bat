@@ -12,9 +12,9 @@ pushd build
 
 echo %DYNAMIC_RUNTIME%
 if "%DYNAMIC_RUNTIME%"=="true" (
-    set RUNTIME_FLAG="-Dgtest_forced_shared_crt"
+    set RUNTIME_FLAG=-Dgtest_forced_shared_crt
 ) else (
-    set RUNTIME_FLAG=" "
+    set RUNTIME_FLAG=
 )
 cmake .. -DCMAKE_BUILD_TYPE=%BUILD_TYPE% -G "NMake Makefiles" %RUNTIME_FLAG%
 make
