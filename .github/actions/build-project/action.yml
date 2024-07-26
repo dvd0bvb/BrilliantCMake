@@ -3,8 +3,8 @@ description: Build a CMake project
 author: David Brill (dvd0bvb)
 
 inputs:
-  inputs:
-    project-name: The project name
+  project-name:
+    description: The project name
     required: true
   c-compiler:
     description: The C compiler being used
