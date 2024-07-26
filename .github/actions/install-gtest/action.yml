@@ -17,18 +17,12 @@ inputs:
 runs: 
   using: "composite"
   steps:
-    - name: Set GitHub Path
-      run: echo "$GITHUB_ACTION_PATH" >> $GITHUB_PATH
-      shell: bash
-      env:
-        GITHUB_ACTION_PATH: ${{ github.action_path }}
-
     - name: build and install gtest
       if: runner.os != 'Windows'
-      run: install-gtest.sh ${{ inputs.tag }} ${{ inputs.build-type }}
+      run: ${{ github.action_path }}/install-gtest.sh ${{ inputs.tag }} ${{ inputs.build-type }}
       shell: bash
     
     - name:
       if: runner.os == 'Windows'
-      run: install-gtest.bat ${{ inputs.tag }} ${{ inputs.build-type }} ${{ inputs.shared-msvc-runtime }}
+      run: ${{ github.action_path }}\install-gtest.bat ${{ inputs.tag }} ${{ inputs.build-type }} ${{ inputs.shared-msvc-runtime }}
       shell: pwsh
