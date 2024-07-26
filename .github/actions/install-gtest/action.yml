@@ -31,5 +31,5 @@ runs:
         pushd ${{ github.action_path }}
         .\install-gtest.bat ${{ inputs.tag }} ${{ inputs.build-type }} ${{ inputs.dynamic-msvc-runtime }}
         popd
-        echo '::set-env name=CMAKE_PREFIX_PATH::C:/Program Files (x86)/googletest-distribution'
+        echo "CMAKE_PREFIX_PATH=C:/Program Files (x86)/googletest-distribution;$CMAKE_PREFIX_PATH" >> $GITHUB_ENV
       shell: pwsh
