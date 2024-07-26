@@ -11,16 +11,16 @@ inputs:
     default: false
 runs:
   using: "composite"
-  
-  - name: Install
-    if: inputs.with-msan
-    shell: ${{ inputs.shell-name }}
-    run: |
-      pushd ${{ github.action_path }}
-      ./build-with-msan.sh
-      popd
-  
-  - name: Install
-    if: ${{ ! inputs.with-msan }}
-    shell: ${{ inputs.shell-name }}
-    run: sudo apt update && sudo apt install -y libc++-dev libc++abi-dev
+  steps:
+    - name: Install
+      if: inputs.with-msan
+      shell: ${{ inputs.shell-name }}
+      run: |
+        pushd ${{ github.action_path }}
+        ./build-with-msan.sh
+        popd
+    
+    - name: Install
+      if: ${{ ! inputs.with-msan }}
+      shell: ${{ inputs.shell-name }}
+      run: sudo apt update && sudo apt install -y libc++-dev libc++abi-dev
