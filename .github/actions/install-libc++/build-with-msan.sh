@@ -1,5 +1,8 @@
 #! /usr/bin/bash
 
+#prereq for llvm
+sudo apt-get install ninja-build
+
 # Ripped from google's documentation
 # clone LLVM
 git clone --depth=1 https://github.com/llvm/llvm-project
