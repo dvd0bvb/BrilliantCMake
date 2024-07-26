@@ -13,7 +13,7 @@ inputs:
   dynamic-msvc-runtime:
     description: Link the msvc runtime dynamically (default, MD) or statically (MT)
     required: false
-    default: true
+    default: "true"
 runs: 
   using: "composite"
   steps:
