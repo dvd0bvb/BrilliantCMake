@@ -12,7 +12,7 @@ pushd build
 
 echo %DYNAMIC_RUNTIME%
 if "%DYNAMIC_RUNTIME%"=="true" (
-    set RUNTIME_FLAG=-Dgtest_forced_shared_crt
+    set RUNTIME_FLAG=-Dgtest_forced_shared_crt=ON
 ) else (
     set RUNTIME_FLAG=
 )
