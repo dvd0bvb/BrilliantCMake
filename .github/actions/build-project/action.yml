@@ -29,7 +29,9 @@ runs:
         build-type: ${{ inputs.build-type }}
         dynamic-msvc-runtime: "true"
 
-    - if: inputs.compiler == 'clang++'
+    # Update to the latest libc++ for clang
+    - name: Use libc++ for Clang
+      if: inputs.compiler == 'clang++'
       shell: ${{ inputs.shell-name }}
       run: sudo apt update && sudo apt install -y libc++-dev libc++abi-dev
       

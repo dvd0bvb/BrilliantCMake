@@ -35,7 +35,13 @@ target_compile_features(
 target_compile_options(
     ${PROJECT_NAME}
     PRIVATE 
-        ${PROJECT_WARNINGS}
+        ${PROJECT_FLAGS}
+)
+
+target_link_options(
+    ${PROJECT_NAME}
+    PRIVATE
+        ${PROJECT_LINK_FLAGS}
 )
 
 set_msvc_runtime(${PROJECT_NAME})
