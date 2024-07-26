@@ -17,6 +17,9 @@ inputs:
   shell-name:
     description: The shell to run commands in
     required: true
+  cmake-config-args:
+    description: Additional arguments for Cmake config step
+    required: false
 defaults:
   run:
     shell: bash
@@ -38,11 +41,13 @@ runs:
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
       run: >
-        cmake -B ${{ github.workspace }}/build
+        cmake 
+        -B ${{ github.workspace }}/build
+        -S ${{ github.workspace }}
         -DCMAKE_CXX_COMPILER=${{ inputs.cpp-compiler }}
         -DCMAKE_C_COMPILER=${{ inputs.c-compiler }}
         -DCMAKE_BUILD_TYPE=${{ inputs.build-type }}
-        -S ${{ github.workspace }}
+        ${{ inputs.cmake-config-args }}
 
     - name: Build
       shell: ${{ inputs.shell-name }}
