@@ -16,15 +16,14 @@ inputs:
     description: Build type
     required: true
 run:
-  using: "composite"
-  
-  - name: Install gtest 
-    uses: ./.github/actions/install-gtest
-    with:
-      build-type: ${{ inputs.build-type }}
-      dynamic-msvc-runtime: "true"
-  
+  using: "composite"  
   steps:
+    - name: Install gtest 
+      uses: ./.github/actions/install-gtest
+      with:
+        build-type: ${{ inputs.build-type }}
+        dynamic-msvc-runtime: "true"
+
     - if: inputs.compiler == 'clang++'
       run: sudo apt update && sudo apt install -y libc++-dev libc++abi-dev
       
