@@ -29,6 +29,6 @@ runs:
       if: runner.os == 'Windows'
       run: |
         pushd ${{ github.action_path }}
-        .\install-gtest.bat ${{ inputs.tag }} ${{ inputs.build-type }} ${{ inputs.shared-msvc-runtime }}
+        .\install-gtest.bat ${{ inputs.tag }} ${{ inputs.build-type }} ${{ inputs.dynamic-msvc-runtime }}
         popd
       shell: pwsh
