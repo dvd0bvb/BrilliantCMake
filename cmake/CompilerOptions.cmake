@@ -71,8 +71,8 @@ set(GCCISH "$<COMPILE_LANG_AND_ID:CXX,GCC,LCC,GNU>")
 
 set(PROJECT_FLAGS 
     "$<$<BOOL:${MSVCISH}>:${MSVC_WARNINGS}>" 
-    "$<$<BOOL:${CLANGISH}>:-stdlib=libc++ ${CLANG_WARNINGS}>" 
+    "$<$<BOOL:${CLANGISH}>:${CLANG_WARNINGS}>" 
     "$<$<BOOL:${GCCISH}>:${GCC_WARNINGS}>"
 )
 
-set(PROJECT_LINK_FLAGS "$<$<BOOL:${CLANGISH}>>:-lc++abi")
+set(PROJECT_LINK_FLAGS "$<$<BOOL:${CLANGISH}>>:-stdlib=libc++ -lc++abi")

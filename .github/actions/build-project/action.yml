@@ -31,9 +31,10 @@ runs:
 
     # Update to the latest libc++ for clang
     - name: Use libc++ for Clang
-      if: inputs.compiler == 'clang++'
-      shell: ${{ inputs.shell-name }}
-      run: sudo apt update && sudo apt install -y libc++-dev libc++abi-dev
+      if: inputs.cpp-compiler == 'clang++'
+      uses: ./.github/actions/install-libc++
+      with:
+        shell-name: ${{ inputs.shell-name }}
       
     - name: Configure CMake
       shell: ${{ inputs.shell-name }}

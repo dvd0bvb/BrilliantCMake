@@ -1,0 +1,26 @@
+name: Build Project
+description: Build a CMake project
+author: David Brill (dvd0bvb)
+inputs:
+  shell-name:
+    description: The shell to run commands in
+    required: true
+  with-msan:
+    description: Install libc++ with msan
+    required: false
+    default: false
+runs:
+  using: "composite"
+  
+  - name: Install
+    if: inputs.with-msan
+    shell: ${{ inputs.shell-name }}
+    run: |
+      pushd ${{ github.action_path }}
+      ./build-with-msan.sh
+      popd
+  
+  - name: Install
+    if: ${{ ! inputs.with-msan }}
+    shell: ${{ inputs.shell-name }}
+    run: sudo apt update && sudo apt install -y libc++-dev libc++abi-dev
