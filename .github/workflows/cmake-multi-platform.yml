@@ -43,6 +43,7 @@ jobs:
             c_compiler: cl
 
     steps:
+    - uses: actions/checkout@v4
     - uses: ilammy/msvc-dev-cmd@v1
     - uses: ./.github/actions/build-project
       with:

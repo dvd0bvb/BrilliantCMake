@@ -23,9 +23,6 @@ run:
     with:
       build-type: ${{ inputs.build-type }}
       dynamic-msvc-runtime: "true"
-
-  - name: Checkout source
-    uses: actions/checkout@v4
   
   steps:
     - if: inputs.compiler == 'clang++'
