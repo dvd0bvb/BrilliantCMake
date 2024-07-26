@@ -19,10 +19,16 @@ runs:
   steps:
     - name: build and install gtest
       if: runner.os != 'Windows'
-      run: ${{ github.action_path }}/install-gtest.sh ${{ inputs.tag }} ${{ inputs.build-type }}
+      run: | 
+        pushd ${{ github.action_path }}
+        ./install-gtest.sh ${{ inputs.tag }} ${{ inputs.build-type }}
+        popd
       shell: bash
     
     - name:
       if: runner.os == 'Windows'
-      run: ${{ github.action_path }}\install-gtest.bat ${{ inputs.tag }} ${{ inputs.build-type }} ${{ inputs.shared-msvc-runtime }}
+      run: |
+        pushd ${{ github.action_path }}
+        .\install-gtest.bat ${{ inputs.tag }} ${{ inputs.build-type }} ${{ inputs.shared-msvc-runtime }}
+        popd
       shell: pwsh
