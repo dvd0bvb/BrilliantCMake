@@ -1,15 +1,12 @@
 #! /usr/bin/bash
 
-#prereq for llvm
-sudo apt-get install ninja-build
-
-# Ripped from google's documentation
+# Based on google's documentation
 # clone LLVM
 git clone --depth=1 https://github.com/llvm/llvm-project
 cd llvm-project
 mkdir build; cd build
 # configure cmake
-cmake -GNinja ../llvm \
+cmake -G "Unix Makefile" ../llvm \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DLLVM_ENABLE_PROJECTS="libcxx;libcxxabi" \
 	-DCMAKE_C_COMPILER=clang \
