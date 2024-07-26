@@ -13,7 +13,7 @@ runs:
   using: "composite"
   steps:
     - name: Install
-      if: inputs.with-msan
+      if: ${{ inputs.with-msan }}
       shell: ${{ inputs.shell-name }}
       run: |
         pushd ${{ github.action_path }}
