@@ -12,8 +12,8 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Build
-      if: inputs.with-msan != 'false'
+    - name: Build and Install
+      if: inputs.with-msan == 'true'
       working-directory: ${{ github.action_path }}
       shell: ${{ inputs.shell-name }}
       run: ./build-with-msan.sh

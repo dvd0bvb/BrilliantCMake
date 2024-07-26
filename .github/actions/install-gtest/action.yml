@@ -14,18 +14,27 @@ inputs:
     description: Link the msvc runtime dynamically (default, MD) or statically (MT)
     required: false
     default: "true"
+  with-msan: 
+    description: Build gtest with additional instrumentation for msan
+    required: false
+    default: "false"
 runs: 
   using: "composite"
   steps:
-    - name: build and install gtest
+    - name: Determine Msan flags
+      id: msan-flags
+      if: inputs.with-msan == 'true'
+      run: echo "flags=-fsanitize=memory -stdlib=libc++ -L/path/to/libcxx_msan/lib -lc++abi -I/path/to/libcxx_msan/include -I/path/to/libcxx_msan/include/c++/v1" >> $GITHUB_OUTPUT
+
+    - name: Build and install gtest
       if: runner.os != 'Windows'
       run: | 
         pushd ${{ github.action_path }}
-        ./install-gtest.sh ${{ inputs.tag }} ${{ inputs.build-type }}
+        ./install-gtest.sh ${{ inputs.tag }} ${{ inputs.build-type }} ${{ steps.msan-flags.flags }}
         popd
       shell: bash
     
-    - name:
+    - name: Build and install gtest
       if: runner.os == 'Windows'
       run: |
         pushd ${{ github.action_path }}
