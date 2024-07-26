@@ -1,7 +1,6 @@
 name: Build Project
 description: Build a CMake project
 author: David Brill (dvd0bvb)
-
 inputs:
   project-name:
     description: The project name
@@ -15,7 +14,7 @@ inputs:
   build-type:
     description: Build type
     required: true
-run:
+runs:
   using: "composite"  
   steps:
     - name: Install gtest 
