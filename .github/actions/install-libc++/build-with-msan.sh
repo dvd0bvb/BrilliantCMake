@@ -8,9 +8,9 @@ mkdir build; cd build
 # configure cmake
 cmake -G "Unix Makefiles" ../llvm \
 	-DCMAKE_BUILD_TYPE=Release \
-	-DLLVM_ENABLE_PROJECTS="libcxx;libcxxabi" \
+	-DLLVM_ENABLE_RUNTIMES="libcxx;libcxxabi" \
 	-DCMAKE_C_COMPILER=clang \
 	-DCMAKE_CXX_COMPILER=clang++ \
 	-DLLVM_USE_SANITIZER=MemoryWithOrigins
 # build the libraries
-cmake --build .
+cmake --build . cxx cxxabi
