@@ -22,24 +22,37 @@ runs:
   using: "composite"
   steps:
     - name: Determine Msan flags
-      id: msan-flags
       if: inputs.with-msan == 'true'
-      run: echo "flags=-fsanitize=memory -stdlib=libc++ -L/path/to/libcxx_msan/lib -lc++abi -I/path/to/libcxx_msan/include -I/path/to/libcxx_msan/include/c++/v1" >> $GITHUB_OUTPUT
-      shell: bash
-
-    - name: Build and install gtest
-      if: runner.os != 'Windows'
-      run: | 
-        pushd ${{ github.action_path }}
-        ./install-gtest.sh ${{ inputs.tag }} ${{ inputs.build-type }} ${{ steps.msan-flags.flags }}
-        popd
-      shell: bash
-    
-    - name: Build and install gtest
-      if: runner.os == 'Windows'
       run: |
         pushd ${{ github.action_path }}
-        .\install-gtest.bat ${{ inputs.tag }} ${{ inputs.build-type }} ${{ inputs.dynamic-msvc-runtime }}
+        set flags="-fsanitize=memory -stdlib=libc++ -L/path/to/libcxx_msan/lib -lc++abi -I/path/to/libcxx_msan/include -I/path/to/libcxx_msan/include/c++/v1"
+        ./install-gtest.sh ${{ inputs.tag }} ${{ inputs.build-type }} $flags
         popd
-        echo "CMAKE_PREFIX_PATH=C:/Program Files (x86)/googletest-distribution;$CMAKE_PREFIX_PATH" >> $env:GITHUB_ENV
-      shell: pwsh
+      shell: bash
+
+    - name: Install gtest
+      if: inputs.with-msan == 'false' and runner.os != 'Windows'
+      run: sudo apt update && sudo apt install libgtest-dev
+      shell: bash
+
+    - name: Install gtest
+      if: inputs.with-msan == 'false' and runner.os != 'Windows'
+      run: vcpkg install gtest
+      shell: pwsh        
+
+    # - name: Build and install gtest
+    #   if: runner.os != 'Windows'
+    #   run: | 
+    #     pushd ${{ github.action_path }}
+    #     ./install-gtest.sh ${{ inputs.tag }} ${{ inputs.build-type }} ${{ steps.msan-flags.flags }}
+    #     popd
+    #   shell: bash
+    
+    # - name: Build and install gtest
+    #   if: runner.os == 'Windows'
+    #   run: |
+    #     pushd ${{ github.action_path }}
+    #     .\install-gtest.bat ${{ inputs.tag }} ${{ inputs.build-type }} ${{ inputs.dynamic-msvc-runtime }}
+    #     popd
+    #     echo "CMAKE_PREFIX_PATH=C:/Program Files (x86)/googletest-distribution;$CMAKE_PREFIX_PATH" >> $env:GITHUB_ENV
+    #   shell: pwsh
