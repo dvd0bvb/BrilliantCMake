@@ -7,7 +7,7 @@ mkdir build
 # configure cmake
 cmake -G "Unix Makefiles" \
 	-S runtimes \
-	-B build
+	-B build \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DLLVM_ENABLE_RUNTIMES="libcxx;libcxxabi" \
 	-DCMAKE_C_COMPILER=clang \
