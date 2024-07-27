@@ -1,12 +1,13 @@
 #! /usr/bin/bash
 
-# Based on google's documentation
 # clone LLVM
-git clone --depth=1 https://github.com/llvm/llvm-project
+git clone --depth=1 https://github.com/llvm/llvm-project.git
 cd llvm-project
-mkdir build; cd build
+mkdir build
 # configure cmake
-cmake -G "Unix Makefiles" ../llvm \
+cmake -G "Unix Makefiles" \
+	-S runtimes \
+	-B build
 	-DCMAKE_BUILD_TYPE=Release \
 	-DLLVM_ENABLE_RUNTIMES="libcxx;libcxxabi" \
 	-DCMAKE_C_COMPILER=clang \
