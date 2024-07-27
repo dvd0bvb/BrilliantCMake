@@ -9,7 +9,7 @@ cmake -G "Unix Makefiles" \
 	-S runtimes \
 	-B build \
 	-DCMAKE_BUILD_TYPE=Release \
-	-DLLVM_ENABLE_RUNTIMES="libcxx;libcxxabi" \
+	-DLLVM_ENABLE_RUNTIMES="libcxx;libcxxabi;libunwind" \
 	-DCMAKE_C_COMPILER=clang \
 	-DCMAKE_CXX_COMPILER=clang++ \
 	-DLLVM_USE_SANITIZER=MemoryWithOrigins
