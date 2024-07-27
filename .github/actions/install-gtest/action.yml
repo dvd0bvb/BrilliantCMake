@@ -31,12 +31,12 @@ runs:
       shell: bash
 
     - name: Install gtest
-      if: inputs.with-msan == 'false' and runner.os != 'Windows'
+      if: inputs.with-msan == 'false' && runner.os != 'Windows'
       run: sudo apt update && sudo apt install libgtest-dev
       shell: bash
 
     - name: Install gtest
-      if: inputs.with-msan == 'false' and runner.os != 'Windows'
+      if: inputs.with-msan == 'false' && runner.os != 'Windows'
       run: vcpkg install gtest
       shell: pwsh        
 
