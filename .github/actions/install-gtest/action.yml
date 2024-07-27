@@ -36,7 +36,7 @@ runs:
       shell: bash
 
     - name: Install gtest
-      if: inputs.with-msan == 'false' && runner.os != 'Windows'
+      if: inputs.with-msan == 'false' && runner.os == 'Windows'
       run: vcpkg install gtest
       shell: pwsh        
 
