@@ -35,24 +35,11 @@ runs:
       run: sudo apt update && sudo apt install libgtest-dev
       shell: bash
 
-    - name: Install gtest
+    - name: Build and install gtest
       if: inputs.with-msan == 'false' && runner.os == 'Windows'
-      run: vcpkg install gtest
-      shell: pwsh        
-
-    # - name: Build and install gtest
-    #   if: runner.os != 'Windows'
-    #   run: | 
-    #     pushd ${{ github.action_path }}
-    #     ./install-gtest.sh ${{ inputs.tag }} ${{ inputs.build-type }} ${{ steps.msan-flags.flags }}
-    #     popd
-    #   shell: bash
-    
-    # - name: Build and install gtest
-    #   if: runner.os == 'Windows'
-    #   run: |
-    #     pushd ${{ github.action_path }}
-    #     .\install-gtest.bat ${{ inputs.tag }} ${{ inputs.build-type }} ${{ inputs.dynamic-msvc-runtime }}
-    #     popd
-    #     echo "CMAKE_PREFIX_PATH=C:/Program Files (x86)/googletest-distribution;$CMAKE_PREFIX_PATH" >> $env:GITHUB_ENV
-    #   shell: pwsh
+      run: |
+        pushd ${{ github.action_path }}
+        .\install-gtest.bat ${{ inputs.tag }} ${{ inputs.build-type }} ${{ inputs.dynamic-msvc-runtime }}
+        popd
+        echo "CMAKE_PREFIX_PATH=C:/Program Files (x86)/googletest-distribution;$CMAKE_PREFIX_PATH" >> $env:GITHUB_ENV
+      shell: pwsh
