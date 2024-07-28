@@ -14,7 +14,7 @@ runs:
   steps:
     - name: Build and Install
       if: inputs.with-msan == 'true'
-      working-directory: ${{ github.action_path }}
+      working-directory: ${{ github.workspace }}
       shell: ${{ inputs.shell-name }}
       run: ./build-with-msan.sh
     
