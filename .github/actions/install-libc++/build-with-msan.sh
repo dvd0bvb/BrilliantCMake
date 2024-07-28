@@ -1,5 +1,8 @@
 #! /usr/bin/bash
 
+sudo apt update
+sudo apt install libclang-dev
+
 # clone LLVM
 git clone --depth=1 https://github.com/llvm/llvm-project.git
 cd llvm-project
