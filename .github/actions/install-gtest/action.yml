@@ -25,7 +25,8 @@ runs:
       if: inputs.with-msan == 'true'
       run: |
         pushd ${{ github.action_path }}
-        set flags="-fsanitize=memory -stdlib=libc++ -L/path/to/libcxx_msan/lib -lc++abi -I/path/to/libcxx_msan/include -I/path/to/libcxx_msan/include/c++/v1"
+        set build_path=${{ github.action_path }}/llvm-project/build
+        set flags="-fsanitize=memory -stdlib=libc++ -L$build_path/lib -lc++abi -I$build_path/include -I$build_path/include/c++/v1"
         ./install-gtest.sh ${{ inputs.tag }} ${{ inputs.build-type }} $flags
         popd
       shell: bash
