@@ -14,4 +14,4 @@ cmake -G "Unix Makefiles" \
 	-DCMAKE_CXX_COMPILER=clang++ \
 	-DLLVM_USE_SANITIZER=MemoryWithOrigins
 # build the libraries
-cmake --build . -- cxx cxxabi
+cmake --build build -- cxx cxxabi
