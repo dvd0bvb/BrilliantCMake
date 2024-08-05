@@ -21,7 +21,7 @@ inputs:
 runs: 
   using: "composite"
   steps:
-    - name: Determine Msan flags
+    - name: Install gtest with msan
       if: inputs.with-msan == 'true'
       run: |
         wget $(wget -q -O - https://api.github.com/repos/dvd0bvb/gtest-with-msan/releases/latest  |  jq -r '.assets[] | select(.name | contains ("deb")) | .browser_download_url')        

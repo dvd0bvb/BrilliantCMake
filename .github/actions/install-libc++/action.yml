@@ -12,11 +12,13 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Build and Install
+    - name: Install
       if: inputs.with-msan == 'true'
       working-directory: ${{ github.workspace }}
       shell: ${{ inputs.shell-name }}
-      run: ${{ github.action_path }}/build-with-msan.sh
+      run: |
+        wget $(wget -q -O - https://api.github.com/repos/dvd0bvb/libcxx-with-msan/releases/latest  |  jq -r '.assets[] | select(.name | contains ("deb")) | .browser_download_url')        
+        sudo dpkg -i libc++-with-msan-v1.0.0.deb
     
     - name: Install
       if: inputs.with-msan == 'false'
