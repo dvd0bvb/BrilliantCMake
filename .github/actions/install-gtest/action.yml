@@ -33,7 +33,7 @@ runs:
 
     - name: Install gtest
       if: inputs.with-msan == 'false' && runner.os != 'Windows'
-      run: sudo apt update && sudo apt install libgtest-dev
+      run: sudo apt update && sudo apt install libgtest-dev libgmock-dev
       shell: ${{ inputs.shell-name }}
 
     - name: Build and install gtest
