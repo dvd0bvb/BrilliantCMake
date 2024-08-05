@@ -24,11 +24,8 @@ runs:
     - name: Determine Msan flags
       if: inputs.with-msan == 'true'
       run: |
-        pushd ${{ github.action_path }}
-        set build_path=${{ github.action_path }}/llvm-project/build
-        set flags="-fsanitize=memory -stdlib=libc++ -L$build_path/lib -lc++abi -I$build_path/include -I$build_path/include/c++/v1"
-        ./install-gtest.sh ${{ inputs.tag }} ${{ inputs.build-type }} $flags
-        popd
+        wget $(wget -q -O - https://api.github.com/repos/dvd0bvb/gtest-with-msan/releases/latest  |  jq -r '.assets[] | select(.name | contains ("deb")) | .browser_download_url')        
+        sudo dpkg -i gtest-with-msan-v1.0.0.deb
       shell: bash
 
     - name: Install gtest
