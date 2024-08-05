@@ -29,4 +29,4 @@ jobs:
         cpp-compiler: ${{ matrix.cpp_compiler }}
         build-type: ${{ matrix.build_type }}
         shell-name: ${{ matrix.shell }}
-        cmake-config-args: -DSANITIZER=ASAN -DCMAKE_CXX_FLAGS="-L${{ github.workspace }}/llvm-project/build/lib -I${{ github.workspace }}/llvm-project/build/include -I${{ github.workspace }}/llvm-project/build/include/c++/v1 -Wl,-rpath,${{ github.workspace }}/llvm-project/build/lib"
+        cmake-config-args: -DSANITIZER=ASAN

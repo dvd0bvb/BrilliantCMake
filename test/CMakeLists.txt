@@ -54,6 +54,7 @@ find_package(GTest REQUIRED)
 target_link_libraries(
     ${TEST_TARGET}
     PRIVATE
+        GTest::gmock
         GTest::gtest
         GTest::gtest_main
         ${TEST_DEPENDENCIES}

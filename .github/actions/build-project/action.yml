@@ -38,14 +38,13 @@ runs:
     - name: Install gtest 
       uses: ./.github/actions/install-gtest
       with:
-        build-type: ${{ inputs.build-type }}
+        build-type: Release
         dynamic-msvc-runtime: "true"
+        shell-name: ${{ inputs.shell-name }}
         with-msan: ${{ inputs.building-msan }}
       
     - name: Configure CMake
       shell: ${{ inputs.shell-name }}
-      # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
-      # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
       run: >
         cmake 
         -B ${{ github.workspace }}/build
@@ -57,12 +56,9 @@ runs:
 
     - name: Build
       shell: ${{ inputs.shell-name }}
-      # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
       run: cmake --build ${{ github.workspace }}/build --config ${{ inputs.build-type }} --target ${{ inputs.project-name }}_TEST
 
     - name: Test
       working-directory: ${{ github.workspace }}/build
       shell: ${{ inputs.shell-name }}
-      # Execute tests defined by the CMake configuration. Note that --build-config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
-      # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
       run: ctest --build-config ${{ inputs.build-type }}

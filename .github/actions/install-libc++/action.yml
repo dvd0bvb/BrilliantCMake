@@ -1,5 +1,5 @@
-name: Build Project
-description: Build a CMake project
+name: Install libc++
+description: Install libc++ to link with clang
 author: David Brill (dvd0bvb)
 inputs:
   shell-name:
@@ -14,7 +14,6 @@ runs:
   steps:
     - name: Install
       if: inputs.with-msan == 'true'
-      working-directory: ${{ github.workspace }}
       shell: ${{ inputs.shell-name }}
       run: |
         wget $(wget -q -O - https://api.github.com/repos/dvd0bvb/libcxx-with-msan/releases/latest  |  jq -r '.assets[] | select(.name | contains ("deb")) | .browser_download_url')        
