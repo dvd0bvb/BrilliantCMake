@@ -29,5 +29,5 @@ jobs:
         cpp-compiler: ${{ matrix.cpp_compiler }}
         build-type: ${{ matrix.build_type }}
         shell-name: ${{ matrix.shell }}
-        cmake-config-args: -DSANITIZER=MSAN
+        cmake-config-args: -DSANITIZER=MSAN -Dproject_MSAN_LIBCXX_INCLUDE_DIR=/usr/include/libcxx-msan/c++/v1 -Dproject_MSAN_LIBCXX_LIB_DIR=/usr/lib/libcxx-msan
         building-msan: "true"
