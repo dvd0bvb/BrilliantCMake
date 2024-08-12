@@ -1,4 +1,5 @@
 include(${CMAKE_SOURCE_DIR}/cmake/CompilerOptions.cmake)
+include(${CMAKE_SOURCE_DIR}/cmake/SanitizerOptions.cmake)
 include(${CMAKE_SOURCE_DIR}/cmake/MsvcRuntime.cmake)
 
 # TODO: set the sources
@@ -44,6 +45,7 @@ target_link_options(
         ${PROJECT_LINK_FLAGS}
 )
 
+set_sanitizer_options(${PROJECT_NAME})
 set_msvc_runtime(${PROJECT_NAME})
 
 # TODO: add dependencies
