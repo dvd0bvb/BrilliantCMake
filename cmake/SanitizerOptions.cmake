@@ -36,12 +36,12 @@ function(set_sanitizer_options TARGET)
             target_link_libraries(${TARGET} PRIVATE c++ c++abi)
             target_link_directories(${TARGET} PRIVATE ${${PROJECT_NAME}_MSAN_LIBCXX_LIB_DIR})
         else()
-            target_link_options(
-                ${TARGET}
-                PRIVATE 
-                    "$<$<BOOL:${CLANGISH}>:-stdlib=libc++>"
-            )
-            target_link_libraries(${TARGET} PRIVATE c++ c++abi)
+            # target_link_options(
+            #     ${TARGET}
+            #     PRIVATE 
+            #         "$<$<BOOL:${CLANGISH}>:-stdlib=libc++>"
+            # )
+            # target_link_libraries(${TARGET} PRIVATE c++ c++abi)
         endif()
     elseif (NOT SANITIZER STREQUAL "")
         message(FATAL_ERROR The value of option SANITIZER is invalid: ${SANITIZER})
