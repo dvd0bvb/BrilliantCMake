@@ -22,6 +22,9 @@ jobs:
             shell: bash
     
     steps:
+    - name: Install LCOV
+      run: sudo apt update && sudo apt install lcov
+
     - uses: actions/checkout@v4
     - uses: ./.github/actions/build-project
       with: 
