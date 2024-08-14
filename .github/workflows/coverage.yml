@@ -44,7 +44,7 @@ jobs:
       with:
         file: ${{ github.workspace }}/coverage.info
         access_token: ${{ secrets.GITHUB_TOKEN }}
-        style: flat
+        style: flat 
         label: 'Coverage'
         warning: 90
         critical: 85
