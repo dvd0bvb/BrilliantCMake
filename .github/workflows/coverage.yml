@@ -37,14 +37,12 @@ jobs:
     
     - name: Run LCOV
       working-directory: ${{ github.workspace }} 
-      run: lcov -d build/src/CMakeFiles/project.dir -c -o ${{ github.workspace }}/coverage.info
+      run: lcov -d build/src/CMakeFiles/project.dir -c -o coverage.info
 
     - name: Make Badge
       uses: GoogleCloudPlatform/lcov-coverage-badge@v1.0.1
       with:
-        file: ${{ github.workspace }}/coverage.info
-        access_token: ${{ secrets.GITHUB_TOKEN }}
-        style: flat 
-        label: 'Coverage'
+        file: ./coverage.info
+        access_token: ${{ github.token }}
         warning: 90
         critical: 85
