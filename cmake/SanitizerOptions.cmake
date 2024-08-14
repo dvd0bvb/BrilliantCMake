@@ -41,6 +41,7 @@ function(set_sanitizer_options TARGET)
                 PRIVATE 
                     "$<$<BOOL:${CLANGISH}>:-stdlib=libc++>"
             )
+            target_link_libraries(${TARGET} PRIVATE c++ c++abi)
         endif()
     elseif (NOT SANITIZER STREQUAL "")
         message(FATAL_ERROR The value of option SANITIZER is invalid: ${SANITIZER})
