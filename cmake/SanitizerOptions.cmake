@@ -39,7 +39,7 @@ function(set_sanitizer_options TARGET)
             target_link_options(
                 ${TARGET}
                 PRIVATE 
-                    "$<$<BOOL:${CLANGISH}>>:-stdlib=libc++"
+                    "$<$<BOOL:${CLANGISH}>:-stdlib=libc++>"
             )
         endif()
     elseif (NOT SANITIZER STREQUAL "")

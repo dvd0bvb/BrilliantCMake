@@ -1,4 +1,4 @@
-name: ASAN, UBSAN, LSAN
+name: Code Coverage
 
 on:
   push:
@@ -30,11 +30,11 @@ jobs:
         cpp-compiler: ${{ matrix.cpp_compiler }}
         build-type: ${{ matrix.build_type }}
         shell-name: ${{ matrix.shell }}
-        cmake-config-args: -Dproject_CODE_COVERAGE
+        cmake-config-args: -Dproject_CODE_COVERAGE=ON
     
     - name: Run LCOV
-      working-directory: 
-      run: lcov -d ${{ github.workspace }}/build/src/CMakeFiles/project.dir -c -o coverage.info
+      working-directory: ${{ github.workspace }} 
+      run: lcov -d build/src/CMakeFiles/project.dir -c -o coverage.info
 
     - name: Make Badge
       uses: GoogleCloudPlatform/lcov-coverage-badge@v1.0.1
