@@ -7,7 +7,6 @@ on:
   pull_request:
     branches: [ "main" ]
 
-
 jobs:
   address_sanitizer:
     runs-on: ${{ matrix.os }}
@@ -15,11 +14,11 @@ jobs:
       matrix:
         os: [ubuntu-24.04]
         build_type: [Debug]
-        c_compiler: [clang]
+        c_compiler: [gcc]
         include:
           - os: ubuntu-24.04
-            c_compiler: clang
-            cpp_compiler: clang++
+            c_compiler: gcc
+            cpp_compiler: g++
             shell: bash
     
     steps:
@@ -31,4 +30,16 @@ jobs:
         cpp-compiler: ${{ matrix.cpp_compiler }}
         build-type: ${{ matrix.build_type }}
         shell-name: ${{ matrix.shell }}
-        cmake-config-args: -DSANITIZER=ASAN
+        cmake-config-args: -Dproject_CODE_COVERAGE
+    
+    - name: Run LCOV
+      working-directory: 
+      run: lcov -d ${{ github.workspace }}/build/src/CMakeFiles/project.dir -c -o coverage.info
+
+    - name: Make Badge
+      uses: GoogleCloudPlatform/lcov-coverage-badge@v1.0.1
+      with:
+        file: ${{ github.workspace }}/coverage.info
+        access_token: ${{ secrets.GITHUB_TOKEN }}
+        warning: 90
+        critical: 85

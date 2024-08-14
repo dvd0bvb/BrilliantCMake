@@ -3,6 +3,7 @@ name: Thread Sanitizer
 on:
   push:
     branches: [ "main" ]
+    paths-ignore: "**/coverage.csv"
   pull_request:
     branches: [ "main" ]
 

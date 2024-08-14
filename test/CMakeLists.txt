@@ -33,18 +33,7 @@ target_compile_features(
         ${THIS_CXX_VERSION}
 )
 
-target_compile_options(
-    ${TEST_TARGET}
-    PRIVATE 
-        ${PROJECT_FLAGS}
-)
-
-target_link_options(
-    ${PROJECT_NAME}
-    PRIVATE
-        ${PROJECT_LINK_FLAGS}
-)
-
+set_compiler_flags(${TEST_TARGET} PRIVATE)
 set_sanitizer_options(${TEST_TARGET})
 set_msvc_runtime(${TEST_TARGET})
 

@@ -69,10 +69,16 @@ set(MSVCISH "$<COMPILE_LANG_AND_ID:CXX,MSVC>")
 set(CLANGISH "$<COMPILE_LANG_AND_ID:CXX,ARMClang,AppleClang,Clang>")
 set(GCCISH "$<COMPILE_LANG_AND_ID:CXX,GCC,LCC,GNU>")
 
-set(PROJECT_FLAGS 
-    "$<$<BOOL:${MSVCISH}>:${MSVC_WARNINGS}>" 
-    "$<$<BOOL:${CLANGISH}>:${CLANG_WARNINGS}>" 
-    "$<$<BOOL:${GCCISH}>:${GCC_WARNINGS}>"
-)
-
-# set(PROJECT_LINK_FLAGS "$<$<BOOL:${CLANGISH}>>:-stdlib=libc++ -lc++abi")
+function(set_compiler_flags TARGET ACCESS)
+    target_compile_options(
+        ${TARGET}
+        ${ACCESS}
+            "$<$<BOOL:${MSVCISH}>:${MSVC_WARNINGS}>" 
+            "$<$<BOOL:${CLANGISH}>:${CLANG_WARNINGS}>" 
+            "$<$<BOOL:${GCCISH}>:${GCC_WARNINGS}>"
+    )
+    if (${${PROJECT_NAME}_CODE_COVERAGE})
+        target_compile_options(${TARGET} ${ACCESS} --coverage)
+        target_link_options(${TARGET} ${ACCESS} --coverage)
+    endif()
+endfunction()

@@ -1,3 +1,5 @@
+include(${CMAKE_SOURCE_DIR}/cmake/CompilerOptions.cmake)
+
 add_library(${PROJECT_NAME} INTERFACE)
 
 target_include_directories(
@@ -7,12 +9,7 @@ target_include_directories(
         $<INSTALL_INTERFACE:include>
 )
 
-include(${CMAKE_SOURCE_DIR}/cmake/CompilerOptions.cmake)
-target_compile_options(
-    ${PROJECT_NAME}
-    INTERFACE 
-        ${PROJECT_WARNINGS}
-)
+set_compiler_flags(${PROJECT_NNAME} INTERFACE)
 
 # TODO: add dependencies
 # find_package(NAME REQUIRED [options])
