@@ -19,8 +19,6 @@ percent = int(numLinesHit / numLines) * 100
 # Might be nice to have some more fine grained info in the badge
 # branches = float(result[0]['branches'])
 
-print(args.critical, args.warning)
-
 if percent < int(args.critical):
     color = 'ff5252'
 elif percent < int(args.warning):

@@ -34,7 +34,7 @@ runs:
     - name: Push coverage badge to github
       shell: ${{ inputs.shell-name }}
       run: |
-        git commit coverage.svg -m '[skip ci] updated coverage badge from CI action'
+        git commit ${{ github.action_path }}/coverage.svg -m '[skip ci] updated coverage badge from CI action'
         git push
       
       
