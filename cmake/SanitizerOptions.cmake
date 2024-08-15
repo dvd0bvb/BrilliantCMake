@@ -23,16 +23,16 @@ set(MSAN_FLAGS
 )
 
 function(set_sanitizer_options TARGET)
-    get_property(LOCAL_SAN CACHE SANITIZER PROPERTY STRINGS)
-    if (SANITIZER IN_LIST LOCAL_SAN)
+    get_property(LOCAL_SAN CACHE ${PROJECT_NAME}_SANITIZER PROPERTY STRINGS)
+    if (${PROJECT_NAME}_SANITIZER IN_LIST LOCAL_SAN)
         set(SAN_FLAGS 
-            "$<$<STREQUAL:${SANITIZER},ASAN>:${ASAN_FLAGS}>"
-            "$<$<STREQUAL:${SANITIZER},TSAN>:${TSAN_FLAGS}>"
-            "$<$<STREQUAL:${SANITIZER},MSAN>:${MSAN_FLAGS}>"
+            "$<$<STREQUAL:${${PROJECT_NAME}_SANITIZER},ASAN>:${ASAN_FLAGS}>"
+            "$<$<STREQUAL:${${PROJECT_NAME}_SANITIZER},TSAN>:${TSAN_FLAGS}>"
+            "$<$<STREQUAL:${${PROJECT_NAME}_SANITIZER},MSAN>:${MSAN_FLAGS}>"
         )
         target_compile_options(${TARGET} PRIVATE ${SAN_FLAGS})
         target_link_options(${TARGET} PRIVATE ${SAN_FLAGS})
-        if (SANITIZER STREQUAL "MSAN")
+        if (${PROJECT_NAME}_SANITIZER STREQUAL "MSAN")
             target_link_libraries(${TARGET} PRIVATE c++ c++abi)
             target_link_directories(${TARGET} PRIVATE ${${PROJECT_NAME}_MSAN_LIBCXX_LIB_DIR})
         else()
@@ -43,7 +43,7 @@ function(set_sanitizer_options TARGET)
             # )
             # target_link_libraries(${TARGET} PRIVATE c++ c++abi)
         endif()
-    elseif (NOT SANITIZER STREQUAL "")
-        message(FATAL_ERROR The value of option SANITIZER is invalid: ${SANITIZER})
+    elseif (NOT ${PROJECT_NAME}_SANITIZER STREQUAL "")
+        message(FATAL_ERROR "The value of option ${PROJECT_NAME}_SANITIZER is invalid: ${${PROJECT_NAME}_SANITIZER}")
     endif()
 endfunction()
