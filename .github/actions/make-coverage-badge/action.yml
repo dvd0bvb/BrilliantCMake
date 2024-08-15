@@ -40,8 +40,12 @@ runs:
 
     - name: Push coverage badge to github
       shell: ${{ inputs.shell-name }}
+      continue-on-error: true
       run: |
+        RESULT=$(git diff ${{ github.action_path }}/coverage.svg)
+        if [ -z "$RESULT" ]; then
         git commit ${{ github.action_path }}/coverage.svg -m '[skip ci] updated coverage badge from CI action'
         git push
+        fi
       
       
