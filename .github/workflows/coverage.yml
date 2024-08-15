@@ -43,3 +43,4 @@ jobs:
       with:
         shell-name: ${{ matrix.shell }}
         lcov-file: ${{ github.workspace }}/coverage.info
+        token: ${{ github.token }}

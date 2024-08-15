@@ -16,6 +16,9 @@ inputs:
     description: Critical threshold
     required: false
     default: 85
+  token:
+    description: Github token
+    required: true
 runs:
   using: "composite"
   steps:
@@ -33,7 +36,7 @@ runs:
     
     - uses: oleksiyrudenko/gha-git-credentials@v2-latest
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ iinputs.token }}
 
     - name: Push coverage badge to github
       shell: ${{ inputs.shell-name }}
