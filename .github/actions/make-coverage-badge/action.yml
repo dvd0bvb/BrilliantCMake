@@ -36,7 +36,7 @@ runs:
     
     - uses: oleksiyrudenko/gha-git-credentials@v2-latest
       with:
-        token: ${{ iinputs.token }}
+        token: ${{ inputs.token }}
 
     - name: Push coverage badge to github
       shell: ${{ inputs.shell-name }}
