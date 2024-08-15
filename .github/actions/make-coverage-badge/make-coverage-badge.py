@@ -22,7 +22,7 @@ percent = int(numLinesHit / numLines) * 100
 print(args.critical, args.warning)
 
 if percent < int(args.critical):
-    color = '9c2c9c'
+    color = 'ff5252'
 elif percent < int(args.warning):
     color = 'd68f0c'
 else:
