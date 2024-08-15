@@ -3,7 +3,6 @@ name: Code Coverage
 on:
   push:
     branches: [ "main" ]
-    paths-ignore: "**/coverage.csv"
   pull_request:
     branches: [ "main" ]
 
@@ -39,14 +38,7 @@ jobs:
       working-directory: ${{ github.workspace }} 
       run: lcov -d build/src/CMakeFiles/project.dir -c -o coverage.info
 
-    - name: Use Node.js
-      uses: actions/setup-node@v3
+    - name: Make Coverage Badge
+      uses: ./.github/actions/make-coverage-badge
       with:
-        node-version: 16
-
-    - name: Make Badge
-      uses: GoogleCloudPlatform/lcov-coverage-badge@v1.0.1
-      with:
-        file: ./coverage.info
-        warning: 90
-        critical: 85
+        shell-name: ${{ matrix.shell }}
