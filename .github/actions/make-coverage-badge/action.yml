@@ -27,9 +27,9 @@ runs:
     - name: Update coverage badge
       working-directory: ${{ github.action_path }}
       shell: ${{ inputs.shell-name }}
-      run: >
-        python ./make-coverage-badge.py ${{ inputs.lcov-file }} coverage.svg 
-        --warning ${{ inputs.warning }} --critical ${{ inputs.critical }}
+      run: |
+        pip install -r requirements.txt
+        python ./make-coverage-badge.py ${{ inputs.lcov-file }} coverage.svg --warning ${{ inputs.warning }} --critical ${{ inputs.critical }}
     
     - name: Push coverage badge to github
       shell: ${{ inputs.shell-name }}
