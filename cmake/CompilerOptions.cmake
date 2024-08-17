@@ -1,7 +1,7 @@
 set(MSVC_WARNINGS
-    /W4     # Baseline reasonable warnings
-    /w14242 # 'identifier': conversion from 'type1' to 'type1', possible loss
-            # of data
+    /W4 # Baseline reasonable warnings
+    /w14242 # 'identifier': conversion from 'type1' to 'type1', possible loss of
+            # data
     /w14254 # 'operator': conversion from 'type1:field_bits' to
             # 'type2:field_bits', possible loss of data
     /w14263 # 'function': member function does not override any base class
@@ -16,8 +16,8 @@ set(MSVC_WARNINGS
     /w14545 # expression before comma evaluates to a function which is missing
             # an argument list
     /w14546 # function call before comma missing argument list
-    /w14547 # 'operator': operator before comma has no effect; expected
-            # operator with side-effect
+    /w14547 # 'operator': operator before comma has no effect; expected operator
+            # with side-effect
     /w14549 # 'operator': operator before comma has no effect; did you intend
             # 'operator'?
     /w14555 # expression has no effect; expected expression with side- effect
@@ -27,41 +27,40 @@ set(MSVC_WARNINGS
             # cause unexpected runtime behavior.
     /w14905 # wide string literal cast to 'LPSTR'
     /w14906 # string literal cast to 'LPWSTR'
-    /w14928 # illegal copy-initialization; more than one user-defined
-            # conversion has been implicitly applied
+    /w14928 # illegal copy-initialization; more than one user-defined conversion
+            # has been implicitly applied
     /permissive- # standards conformance mode for MSVC compiler.
 )
 
 set(CLANG_WARNINGS
     -Wall
-    -Wextra  # reasonable and standard
+    -Wextra # reasonable and standard
     -Wshadow # warn the user if a variable declaration shadows one from a
-            # parent context
+    # parent context
     -Wnon-virtual-dtor # warn the user if a class with virtual functions has a
-                        # non-virtual destructor. This helps catch hard to
-                        # track down memory errors
+    # non-virtual destructor. This helps catch hard to track down memory errors
     -Wold-style-cast # warn for c-style casts
-    -Wcast-align     # warn for potential performance problem casts
-    -Wunused         # warn on anything being unused
+    -Wcast-align # warn for potential performance problem casts
+    -Wunused # warn on anything being unused
     -Woverloaded-virtual # warn if you overload (not override) a virtual
-                        # function
-    -Wpedantic   # warn if non-standard C++ is used
+    # function
+    -Wpedantic # warn if non-standard C++ is used
     -Wconversion # warn on type conversions that may lose data
-    -Wsign-conversion  # warn on sign conversions
+    -Wsign-conversion # warn on sign conversions
     -Wnull-dereference # warn if a null dereference is detected
     -Wdouble-promotion # warn if float is implicit promoted to double
     -Wformat=2 # warn on security issues around functions that format output
-                # (ie printf)
+    # (ie printf)
 )
 
 set(GCC_WARNINGS
     ${CLANG_WARNINGS}
     -Wmisleading-indentation # warn if indentation implies blocks where blocks
-                            # do not exist
+    # do not exist
     -Wduplicated-cond # warn if if / else chain has duplicated conditions
     -Wduplicated-branches # warn if if / else branches have duplicated code
-    -Wlogical-op   # warn about logical operations being used where bitwise were
-                    # probably wanted
+    -Wlogical-op # warn about logical operations being used where bitwise were
+    # probably wanted
     -Wuseless-cast # warn if you perform a cast to the same type
 )
 
@@ -70,15 +69,13 @@ set(CLANGISH "$<COMPILE_LANG_AND_ID:CXX,ARMClang,AppleClang,Clang>")
 set(GCCISH "$<COMPILE_LANG_AND_ID:CXX,GCC,LCC,GNU>")
 
 function(set_compiler_flags TARGET ACCESS)
-    target_compile_options(
-        ${TARGET}
-        ${ACCESS}
-            "$<$<BOOL:${MSVCISH}>:${MSVC_WARNINGS}>" 
-            "$<$<BOOL:${CLANGISH}>:${CLANG_WARNINGS}>" 
-            "$<$<BOOL:${GCCISH}>:${GCC_WARNINGS}>"
-    )
-    if (${${PROJECT_NAME}_CODE_COVERAGE})
-        target_compile_options(${TARGET} ${ACCESS} --coverage)
-        target_link_options(${TARGET} ${ACCESS} --coverage)
-    endif()
+  target_compile_options(
+    ${TARGET} ${ACCESS} "$<$<BOOL:${MSVCISH}>:${MSVC_WARNINGS}>"
+    "$<$<BOOL:${CLANGISH}>:${CLANG_WARNINGS}>"
+    "$<$<BOOL:${GCCISH}>:${GCC_WARNINGS}>"
+  )
+  if(${${PROJECT_NAME}_CODE_COVERAGE})
+    target_compile_options(${TARGET} ${ACCESS} --coverage)
+    target_link_options(${TARGET} ${ACCESS} --coverage)
+  endif()
 endfunction()
