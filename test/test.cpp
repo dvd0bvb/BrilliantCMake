@@ -1,9 +1,9 @@
 /**
  * @file test.cpp
  * @author David Brill (6david6brill6@gmail.com)
- * 
+ *
  * @copyright Copyright (c) 2024
- * 
+ *
  * @brief Test for fizz_buzz
  */
 
