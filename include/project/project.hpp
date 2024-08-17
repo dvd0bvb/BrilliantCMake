@@ -22,5 +22,5 @@ namespace project {
    * @param n The input integer
    * @return A string containing Fizz, Buzz, FizzBuzz or nothing
    */
-  std::string fizz_buzz(int n);
+  [[nodiscard]] auto fizz_buzz(int n) noexcept -> std::string;
 }  // namespace project

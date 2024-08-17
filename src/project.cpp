@@ -12,12 +12,15 @@
 #include <sstream>
 
 namespace project {
-  std::string fizz_buzz(int n) {
+  auto fizz_buzz(int n) noexcept -> std::string {
+    constexpr auto fizz_divisor = 3;
+    constexpr auto buzz_divizor = 5; 
+
     std::stringstream ss;
-    if (n % 3 == 0) {
+    if (n % fizz_divisor == 0) {
       ss << "Fizz";
     }
-    if (n % 5 == 0) {
+    if (n % buzz_divizor == 0) {
       ss << "Buzz";
     }
     return ss.str();
