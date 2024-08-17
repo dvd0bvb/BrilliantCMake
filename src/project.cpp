@@ -14,7 +14,7 @@
 namespace project {
   auto fizz_buzz(int n) noexcept -> std::string {
     constexpr auto fizz_divisor = 3;
-    constexpr auto buzz_divizor = 5; 
+    constexpr auto buzz_divizor = 5;
 
     std::stringstream ss;
     if (n % fizz_divisor == 0) {
