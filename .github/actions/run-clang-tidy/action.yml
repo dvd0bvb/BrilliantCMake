@@ -22,7 +22,8 @@ runs:
       clang-tidy --quiet -p build 
       --config-file=.clang-tidy 
       `find . -regextype posix-extended -type f 
-      -not -path {{ inputs.exclude-path }} 
-      -regex {{ inputs.include-regex }}`
+      -not -path ${{ inputs.exclude-path }} 
+      -regex ${{ inputs.include-regex }}`
     shell: ${{ inputs.shell-name }}
+    working-directory: ${{ github.workspace }}
       
