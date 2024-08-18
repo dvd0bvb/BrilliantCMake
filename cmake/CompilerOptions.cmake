@@ -74,7 +74,7 @@ function(set_compiler_flags TARGET ACCESS)
     "$<$<BOOL:${CLANGISH}>:${CLANG_WARNINGS}>"
     "$<$<BOOL:${GCCISH}>:${GCC_WARNINGS}>"
   )
-  if(${${PROJECT_NAME}_CODE_COVERAGE})
+  if(${BRILLIANT_CMAKE_CODE_COVERAGE})
     target_compile_options(${TARGET} ${ACCESS} --coverage)
     target_link_options(${TARGET} ${ACCESS} --coverage)
   endif()

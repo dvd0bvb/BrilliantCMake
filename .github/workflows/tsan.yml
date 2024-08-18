@@ -29,4 +29,4 @@ jobs:
         cpp-compiler: ${{ matrix.cpp_compiler }}
         build-type: ${{ matrix.build_type }}
         shell-name: ${{ matrix.shell }}
-        cmake-config-args: -Dproject_SANITIZER=TSAN
+        cmake-config-args: -DBRILLIANT_CMAKE_SANITIZER=TSAN

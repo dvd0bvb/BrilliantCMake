@@ -1,22 +1,22 @@
-option(${PROJECT_NAME}_BUILD_EXECUTABLE "Build the project as an executable"
+option(BRILLIANT_CMAKE_BUILD_EXECUTABLE "Build the project as an executable"
        OFF
 )
-option(${PROJECT_NAME}_BUILD_HEADER_ONLY
+option(BRILLIANT_CMAKE_BUILD_HEADER_ONLY
        "Build project as a header only library" OFF
 )
-option(${PROJECT_NAME}_CODE_COVERAGE "Build project with code coverage" OFF)
+option(BRILLIANT_CMAKE_CODE_COVERAGE "Build project with code coverage" OFF)
 
-set(${PROJECT_NAME}_SANITIZER
+set(BRILLIANT_CMAKE_SANITIZER
     ""
     CACHE STRING "Sanitizer option"
 )
-set_property(CACHE ${PROJECT_NAME}_SANITIZER PROPERTY STRINGS ASAN TSAN MSAN)
+set_property(CACHE BRILLIANT_CMAKE_SANITIZER PROPERTY STRINGS ASAN TSAN MSAN)
 
-set(${PROJECT_NAME}_MSAN_LIBCXX_INCLUDE_DIR
+set(BRILLIANT_CMAKE_MSAN_LIBCXX_INCLUDE_DIR
     ""
     CACHE STRING "Include path to the MSAN std lib"
 )
-set(${PROJECT_NAME}_MSAN_LIBCXX_LINK_DIR
+set(BRILLIANT_CMAKE_MSAN_LIBCXX_LINK_DIR
     ""
     CACHE STRING "Link path to the MSAN std lib"
 )

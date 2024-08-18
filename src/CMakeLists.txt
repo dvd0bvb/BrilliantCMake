@@ -7,7 +7,7 @@ set(MAIN_TARGET_SOURCES project.cpp # source 1
     # ...
 )
 
-if(${PROJECT_NAME}_BUILD_EXECUTABLE)
+if(BRILLIANT_CMAKE_BUILD_EXECUTABLE)
   add_executable(${PROJECT_NAME} ${MAIN_TARGET_SOURCES})
 else()
   add_library(${PROJECT_NAME} ${MAIN_TARGET_SOURCES})

@@ -6,7 +6,7 @@ set(GCC_MSAN_FLAGS
     -nostdinc++
     -nostdlib++
     -isystem
-    ${${PROJECT_NAME}_MSAN_LIBCXX_INCLUDE_DIR}
+    ${BRILLIANT_CMAKE_MSAN_LIBCXX_INCLUDE_DIR}
     -fsanitize=memory
     -fsanitize-memory-track-origins
     -fPIE
@@ -35,31 +35,31 @@ set(MSAN_FLAGS
 function(set_sanitizer_options TARGET)
   get_property(
     LOCAL_SAN
-    CACHE ${PROJECT_NAME}_SANITIZER
+    CACHE BRILLIANT_CMAKE_SANITIZER
     PROPERTY STRINGS
   )
-  if(${PROJECT_NAME}_SANITIZER IN_LIST LOCAL_SAN)
+  if(BRILLIANT_CMAKE_SANITIZER IN_LIST LOCAL_SAN)
     set(SAN_FLAGS
-        "$<$<STREQUAL:${${PROJECT_NAME}_SANITIZER},ASAN>:${ASAN_FLAGS}>"
-        "$<$<STREQUAL:${${PROJECT_NAME}_SANITIZER},TSAN>:${TSAN_FLAGS}>"
-        "$<$<STREQUAL:${${PROJECT_NAME}_SANITIZER},MSAN>:${MSAN_FLAGS}>"
+        "$<$<STREQUAL:${BRILLIANT_CMAKE_SANITIZER},ASAN>:${ASAN_FLAGS}>"
+        "$<$<STREQUAL:${BRILLIANT_CMAKE_SANITIZER},TSAN>:${TSAN_FLAGS}>"
+        "$<$<STREQUAL:${BRILLIANT_CMAKE_SANITIZER},MSAN>:${MSAN_FLAGS}>"
     )
     target_compile_options(${TARGET} PRIVATE ${SAN_FLAGS})
     target_link_options(${TARGET} PRIVATE ${SAN_FLAGS})
-    if(${PROJECT_NAME}_SANITIZER STREQUAL "MSAN")
+    if(BRILLIANT_CMAKE_SANITIZER STREQUAL "MSAN")
       target_link_libraries(${TARGET} PRIVATE c++ c++abi)
       target_link_directories(
-        ${TARGET} PRIVATE ${${PROJECT_NAME}_MSAN_LIBCXX_LIB_DIR}
+        ${TARGET} PRIVATE ${BRILLIANT_CMAKE_MSAN_LIBCXX_LIB_DIR}
       )
     else()
       # target_link_options( ${TARGET} PRIVATE
       # "$<$<BOOL:${CLANGISH}>:-stdlib=libc++>"
       # ) target_link_libraries(${TARGET} PRIVATE c++ c++abi)
     endif()
-  elseif(NOT ${PROJECT_NAME}_SANITIZER STREQUAL "")
+  elseif(NOT BRILLIANT_CMAKE_SANITIZER STREQUAL "")
     message(
       FATAL_ERROR
-        "The value of option ${PROJECT_NAME}_SANITIZER is invalid: ${${PROJECT_NAME}_SANITIZER}"
+        "The value of option BRILLIANT_CMAKE_SANITIZER is invalid: ${BRILLIANT_CMAKE_SANITIZER}"
     )
   endif()
 endfunction()

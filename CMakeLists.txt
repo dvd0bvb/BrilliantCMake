@@ -15,11 +15,9 @@ project(${THIS_PROJECT_NAME}
     LANGUAGES CXX
 )
 
-set(TEST_TARGET "${PROJECT_NAME}_TEST")
-
 include(cmake/Options.cmake)
 
-if (${PROJECT_NAME}_BUILD_HEADER_ONLY)
+if (BRILLIANT_CMAKE_BUILD_HEADER_ONLY)
     add_subdirectory(include/${PROJECT_NAME})
 else()
     add_subdirectory(src)
