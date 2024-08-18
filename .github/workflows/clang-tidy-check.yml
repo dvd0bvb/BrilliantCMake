@@ -8,9 +8,16 @@ on:
 
 jobs:
   checkout-and-check-formatting:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
     - uses: actions/checkout@v2
-    - name: Run clang-tidy
-      uses: HorstBaerbel/action-clang-tidy@1.2
+
+    # generate compile_commands.json
+    - run: | 
+        mkdir -p build
+        cmake -B build -S . -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+
+    - uses: ./.github/actions/run-clang-tidy
+      with: 
+        shell-name: bash

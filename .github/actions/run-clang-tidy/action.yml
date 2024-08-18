@@ -1,0 +1,27 @@
+name: 
+description: Update the code coverage badge
+author: David Brill (dvd0bvb)
+inputs:
+  shell-name:
+    description: The shell to run commands in
+    required: true
+  include-regex:
+    description: Regex pattern for files to include
+    required: false
+    default: '.+\.[ch](pp)'
+  exlude-path:
+    description: Path to exclude
+    required: false
+    default: 'build/*'
+runs:
+  using: "composite"
+  steps:
+  - run: suto apt install -y clang-tidy
+  - run: > 
+    clang-tidy --quiet -p build 
+    --config-file=.clang-tidy 
+    `find . -regextype posix-extended -type f 
+    -not -path {{ inputs.exclude-path }} 
+    -regex {{ inputs.include-regex }}`
+
+      
