@@ -32,7 +32,7 @@ jobs:
         cpp-compiler: ${{ matrix.cpp_compiler }}
         build-type: ${{ matrix.build_type }}
         shell-name: ${{ matrix.shell }}
-        cmake-config-args: -Dproject_CODE_COVERAGE=ON
+        cmake-config-args: -DBRILLIANT_CMAKE_CODE_COVERAGE=ON
     
     - name: Run LCOV
       working-directory: ${{ github.workspace }} 
