@@ -16,7 +16,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-  - run: suto apt install -y clang-tidy
+  - run: sudo apt install -y clang-tidy
     shell: ${{ inputs.shell-name }}
   - run: > 
       clang-tidy --quiet -p build 
