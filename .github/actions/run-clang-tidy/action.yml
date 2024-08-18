@@ -12,7 +12,7 @@ inputs:
   exclude-path:
     description: Path to exclude
     required: false
-    default: 'build/*'
+    default: './build/*'
 runs:
   using: "composite"
   steps:
