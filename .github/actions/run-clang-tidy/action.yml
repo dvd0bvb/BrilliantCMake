@@ -18,9 +18,12 @@ runs:
   steps:
   - run: sudo apt install -y clang-tidy
     shell: ${{ inputs.shell-name }}
-  - run: |
-      FILES=$(find . -regextype posix-extended -type f -not -path '${{ inputs.exclude-path }}' -regex '${{ inputs.include-regex }}')
-      clang-tidy --quiet -p build --config-file=.clang-tidy "$FILES"
+  - run: >
+      clang-tidy --quiet -p build 
+      --config-file=.clang-tidy
+      `find . -regextype posix-extended -type f 
+      -not -path '${{ inputs.exclude-path }}' 
+      -regex '${{ inputs.include-regex }}'`
     shell: ${{ inputs.shell-name }}
     working-directory: ${{ github.workspace }}
       
