@@ -7,12 +7,14 @@ on:
     branches: [ main ]
 
 jobs:
-  checkout-and-check-formatting:
+  setup-and-tidy:
     runs-on: ubuntu-24.04
 
     steps:
     - uses: actions/checkout@v2
     - uses: ./.github/actions/install-gtest
+      with:
+        shell-name: bash
 
     # generate compile_commands.json
     - run: | 
