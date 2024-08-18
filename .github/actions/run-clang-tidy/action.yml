@@ -9,7 +9,7 @@ inputs:
     description: Regex pattern for files to include
     required: false
     default: '.+\.[ch](pp)'
-  exlude-path:
+  exclude-path:
     description: Path to exclude
     required: false
     default: 'build/*'
