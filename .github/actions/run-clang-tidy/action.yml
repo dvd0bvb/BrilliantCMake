@@ -19,7 +19,7 @@ runs:
   - run: sudo apt install -y clang-tidy
     shell: ${{ inputs.shell-name }}
   - run: >
-      clang-tidy --quiet -p build 
+      clang-tidy --quiet -p build -warnings-as-errors=*
       --config-file=.clang-tidy
       `find . -regextype posix-extended -type f 
       -not -path '${{ inputs.exclude-path }}' 
