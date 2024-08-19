@@ -22,10 +22,10 @@ runs:
         }
 
         YAML_FILE=.project-config.yml
-        NAME=$(yaml "$YAML_FILE" project-name)
-        SHARED=$(yaml "$YAML_FILE" build-shared)
-        EXE=$(yaml "$YAML_FILE" build-executable)
-        HEADER_ONLY=$(yaml "$YAML_FILE" build-header-only)
+        NAME=$(yaml "$YAML_FILE" "['project-name']")
+        SHARED=$(yaml "$YAML_FILE" "['build-shared']")
+        EXE=$(yaml "$YAML_FILE" "['build-executable']")
+        HEADER_ONLY=$(yaml "$YAML_FILE" "['build-header-only']")
 
         echo "project-name=$NAME" >> "$GITHUB_OUTPUT"
 
