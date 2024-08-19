@@ -4,11 +4,11 @@ author: David Brill (dvd0bvb)
 outputs:
   project-name:
     description: The value of the CMake variable $THIS_PROJECT_NAME
-    output: ${{ steps.set-outputs.outputs.project-name }}
+    value: ${{ steps.set-outputs.outputs.project-name }}
 
   output-type-cmake-flag:
     description: The value of the CMake flag which indicates the build type
-    output: ${{ steps.set-output.outputs.output-type-cmake-flag }}
+    value: ${{ steps.set-output.outputs.output-type-cmake-flag }}
 
 runs:
   using: "composite"  
