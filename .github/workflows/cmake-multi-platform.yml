@@ -50,7 +50,6 @@ jobs:
     - uses: ilammy/msvc-dev-cmd@v1
     - uses: ./.github/actions/build-project
       with:
-        project-name: "project"
         c-compiler: ${{ matrix.c_compiler }}
         cpp-compiler: ${{ matrix.cpp_compiler }}
         build-type: ${{ matrix.build_type }}

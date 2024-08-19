@@ -21,6 +21,11 @@ jobs:
         mkdir -p build
         cmake -B build -S . -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 
+    - uses: ./.github/actions/config-cmake
+      with: 
+        cpp-compiler: g++
+        c-compiler: gcc
+        build-type: Debug
     - uses: ./.github/actions/run-clang-tidy
       with: 
         shell-name: bash

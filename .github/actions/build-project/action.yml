@@ -2,9 +2,6 @@ name: Build Project
 description: Build a CMake project
 author: David Brill (dvd0bvb)
 inputs:
-  project-name:
-    description: The project name
-    required: true
   c-compiler:
     description: The C compiler being used
     required: true
@@ -27,6 +24,9 @@ inputs:
 runs:
   using: "composite"  
   steps:
+    - id: constants
+      uses: ./.github/actions/project-constants
+
     # Update to the latest libc++ for clang
     - name: Use libc++ for Clang
       if: inputs.cpp-compiler == 'clang++'
@@ -42,21 +42,21 @@ runs:
         dynamic-msvc-runtime: "true"
         shell-name: ${{ inputs.shell-name }}
         with-msan: ${{ inputs.building-msan }}
-      
-    - name: Configure CMake
-      shell: ${{ inputs.shell-name }}
-      run: >
-        cmake 
-        -B ${{ github.workspace }}/build
-        -S ${{ github.workspace }}
-        -DCMAKE_CXX_COMPILER=${{ inputs.cpp-compiler }}
-        -DCMAKE_C_COMPILER=${{ inputs.c-compiler }}
-        -DCMAKE_BUILD_TYPE=${{ inputs.build-type }}
-        ${{ inputs.cmake-config-args }}
+    
+    - uses: ./.github/actions/config-cmake
+      with: 
+        cpp-compiler: ${{ inputs.cpp-compiler }}
+        c-compiler: ${{ inputs.c-compiler }}
+        build-type: ${{ inputs.build-type }}
+        cmake-config-args: ${{ inputs.cmake-config-args }}        
 
     - name: Build
+      working-directory: ${{ github.workspace }}
       shell: ${{ inputs.shell-name }}
-      run: cmake --build ${{ github.workspace }}/build --config ${{ inputs.build-type }} --target ${{ inputs.project-name }}_TEST
+      run: > 
+        cmake --build build 
+        --config ${{ inputs.build-type }} 
+        --target ${{ steps.constants.outputs.project-name }}_TEST
 
     - name: Test
       working-directory: ${{ github.workspace }}/build

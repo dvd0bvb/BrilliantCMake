@@ -1,0 +1,36 @@
+name: Config CMake
+description: Update the code coverage badge
+author: David Brill (dvd0bvb)
+inputs:
+  c-compiler:
+    description: The C compiler being used
+    required: true
+  cpp-compiler:
+    description: The CXX compiler being used
+    required: true
+  build-type:
+    description: Build type
+    required: true
+  cmake-config-args:
+    description: Additional arguments for Cmake config step
+    required: false
+  shell:
+    description: The shell to run commands in
+    required: false
+    default: bash
+
+  runs:
+    using: "composite"
+    steps:
+      #assuming repo already checked outd
+      - id: constants
+        uses: ./.github/actions/project-constants
+      - run: > 
+          cmake -B build -S .
+          -DCMAKE_CXX_COMPILER=${{ inputs.cpp-compiler }}
+          -DCMAKE_C_COMPILER=${{ inputs.c-compiler }}
+          -DCMAKE_BUILD_TYPE=${{ inputs.build-type }}
+          ${{ steps.constants.outputs.output-type-cmake-flag }} 
+          ${{ inputs.cmake-config-args }}
+        shell: ${{ inputs.shell }}
+        working-directory: ${{ github.workspace }}

@@ -1,0 +1,4 @@
+project-name: project
+build-shared: false
+build-executable: false
+build-header-only: false

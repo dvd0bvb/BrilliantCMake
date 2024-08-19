@@ -1,0 +1,38 @@
+name: Get Project Constants
+description: Update the code coverage badge
+author: David Brill (dvd0bvb)
+outputs:
+  - project-name:
+    description: The value of the CMake variable $THIS_PROJECT_NAME
+    output: ${{ steps.set-outputs.outputs.project-name }}
+
+  - output-type-cmake-flag:
+    description: The value of the CMake flag which indicates the build type
+    output: ${{ steps.set-output.outputs.output-type-cmake-flag }}
+
+runs:
+  using: "composite"  
+  steps:
+    - id: set-outputs
+      working-directory: ${{ github.workspace }}
+      shell: bash
+      run: |
+        yaml() {
+          python3 -c "import yaml;print(yaml.safe_load(open('$1'))$2)"
+        }
+
+        YAML_FILE=.project-config.yml
+        NAME=$(yaml "$YAML_FILE" project-name)
+        SHARED=$(yaml "$YAML_FILE" build-shared)
+        EXE=$(yaml "$YAML_FILE" build-executable)
+        HEADER_ONLY=$(yaml "$YAML_FILE" build-header-only)
+
+        echo "project-name=$NAME" >> "$GITHUB_OUTPUT"
+
+        if [ "$SHARED" = "true" ]; then
+          echo "output-type-cmake-flag=-DBRILLIANT_CMAKE_BUILD_SHARED=ON" >>"$GITHUB_OUTPUT"
+        elif [ "$EXE" = "true" ]; then
+          echo "output-type-cmake-flag=-DBRILLIANT_CMAKE_BUILD_EXECUTABLE=ON" >>"$GITHUB_OUTPUT"
+        elif [ "$HEADER_ONLY" = "true" ]; then
+          echo "output-type-cmake-flag=-DBRILLIANT_CMAKE_BUILD_HEADER_ONLY=ON" >>"$GITHUB_OUTPUT"
+        fi
