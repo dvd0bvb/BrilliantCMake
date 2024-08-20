@@ -13,15 +13,19 @@ outputs:
 runs:
   using: "composite"  
   steps:
-    - uses: actions/setup-python@v5
+    # Windows does not have PyYAML installed by default
+    - if: runner.os == 'Windows'
+      uses: actions/setup-python@v5
       with:
         cache: 'pip'
+    - if: runner.os == 'Windows'
+      shell: bash
+      run: pip install PyYAML
+
     - id: set-outputs
       working-directory: ${{ github.workspace }}
       shell: bash
       run: |
-        python -m pip install PyYAML
-
         yaml() {
           python3 -c "import yaml;print(yaml.safe_load(open('$1'))$2)"
         }
