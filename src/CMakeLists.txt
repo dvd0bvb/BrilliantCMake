@@ -9,6 +9,12 @@ set(MAIN_TARGET_SOURCES project.cpp # source 1
 
 if(BRILLIANT_CMAKE_BUILD_EXECUTABLE)
   add_executable(${PROJECT_NAME} ${MAIN_TARGET_SOURCES})
+elseif(BRILLIANT_CMAKE_BUILD_SHARED)
+  add_library(${PROJECT_NAME} SHARED ${MAIN_TARGET_SOURCES})
+  set_target_properties(
+    ${PROJECT_NAME} PROPERTIES VERSION ${CMAKE_PROJECT_VERSION}
+                               SOVERSION ${CMAKE_PROJECT_VERSION_MAJOR}
+  )
 else()
   add_library(${PROJECT_NAME} ${MAIN_TARGET_SOURCES})
 endif()
