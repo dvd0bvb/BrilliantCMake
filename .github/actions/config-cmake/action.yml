@@ -25,12 +25,13 @@ inputs:
       #assuming repo already checked outd
       - id: constants
         uses: ./.github/actions/project-constants
-      - run: > 
+        
+      - shell: ${{ inputs.shell }}
+        working-directory: ${{ github.workspace }}
+        run: > 
           cmake -B build -S .
           -DCMAKE_CXX_COMPILER=${{ inputs.cpp-compiler }}
           -DCMAKE_C_COMPILER=${{ inputs.c-compiler }}
           -DCMAKE_BUILD_TYPE=${{ inputs.build-type }}
           ${{ steps.constants.outputs.output-type-cmake-flag }} 
           ${{ inputs.cmake-config-args }}
-        shell: ${{ inputs.shell }}
-        working-directory: ${{ github.workspace }}
