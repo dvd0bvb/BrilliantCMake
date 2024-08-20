@@ -20,7 +20,7 @@ runs:
       working-directory: ${{ github.workspace }}
       shell: bash
       run: |
-        pip install PyYAML
+        python -m pip install PyYAML
 
         yaml() {
           python3 -c "import yaml;print(yaml.safe_load(open('$1'))$2)"
