@@ -47,9 +47,9 @@ jobs:
     - working-directory: ${{ github.workspace }}
       run: >
         curl $(python3 .github/actions/parse-coverage/make-shield-url.py 
-        "${{ steps.stats.outputs.lines }} 
-        ${{ steps.stats.outputs.functions }}
-        ${{ steps.stats.outputs.branches }}" 
+        "${{ steps.stats.outputs.line-percent }} 
+        ${{ steps.stats.outputs.function-percent }} 
+        ${{ steps.stats.outputs.branch-percent }}" 
         95 85)
         > ${{ github.workspace }}/img/coverage.svg
 
