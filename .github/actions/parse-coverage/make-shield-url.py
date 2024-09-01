@@ -23,10 +23,10 @@ parser.add_argument('critical')
 parser.add_argument('warning')
 args = parser.parse_args()
 
-percents = ( int(s) for s in args.percents.split() )
+percents = args.percents.split()
 percents_label = 'L: {} F: {} B: {}'.format(*percents)
 
 # color is based on worst of the percents
-color_idx = max([ get_status_from_percent(p, int(args.warning), int(args.critical)) for p in percents ])
+color_idx = max([ get_status_from_percent(int(p), int(args.warning), int(args.critical)) for p in percents ])
 
 print(BASE_URL + '/' + quote(f'Coverage-{percents_label}-{COLORS[color_idx]}'))
