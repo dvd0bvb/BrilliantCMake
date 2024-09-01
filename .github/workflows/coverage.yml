@@ -35,11 +35,35 @@ jobs:
     
     - name: Run LCOV
       working-directory: ${{ github.workspace }} 
-      run: lcov -d build/src/CMakeFiles/project.dir -c -o coverage.info
+      run: |
+        lcov -d build/src/CMakeFiles/project.dir -c -o build/coverage.info --branch-coverage
+        genhtml build/coverage.info -o docs/coverage --branch-coverage
 
-    - name: Make Coverage Badge
-      uses: ./.github/actions/make-coverage-badge
+    - uses: ./.github/actions/parse-coverage
+      id: stats
       with:
-        shell-name: ${{ matrix.shell }}
-        lcov-file: ${{ github.workspace }}/coverage.info
+        lcov-file: ${{ github.workspace }}/build/coverage.info
+
+    - working-directory: ${{ github.workspace }}
+      run: >
+        curl $(python3 .github/actions/parse-coverage/make-shield-url.py 
+        "${{ steps.stats.outputs.lines }} 
+        ${{ steps.stats.outputs.functions }}
+        ${{ steps.stats.outputs.branches }}" 
+        95 85)
+        > ${{ github.workspace }}/img/coverage.svg
+
+    - uses: oleksiyrudenko/gha-git-credentials@v2-latest
+      with:
         token: ${{ github.token }}
+
+    - name: Push coverage badge to github
+      shell: bash
+      continue-on-error: true
+      run: |
+        RESULT=$(git diff ${{ github.workspace }}/img/coverage.svg)
+        if [ -z "$RESULT" ]; then
+        cp ${{ github.workspace }}/img/coverage.svg ${{ github.workspace }}/docs/img
+        git commit ${{ github.action_path }}/coverage.svg -m '[skip ci] updated coverage badge from CI action'
+        git push
+        fi
