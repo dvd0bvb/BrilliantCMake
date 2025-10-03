@@ -2,16 +2,8 @@ include(${CMAKE_SOURCE_DIR}/cmake/CompilerOptions.cmake)
 
 set(GCC_ASAN_FLAGS -fsanitize=address,undefined -fno-omit-frame-pointer)
 set(GCC_TSAN_FLAGS -fsanitize=thread -fPIE -pie)
-set(GCC_MSAN_FLAGS
-    -nostdinc++
-    -nostdlib++
-    -isystem
-    ${BRILLIANT_CMAKE_MSAN_LIBCXX_INCLUDE_DIR}
-    -fsanitize=memory
-    -fsanitize-memory-track-origins
-    -fPIE
-    -pie
-    -fno-omit-frame-pointer
+set(GCC_MSAN_FLAGS -fsanitize=memory -fsanitize-memory-track-origins -fPIE -pie
+                   -fno-omit-frame-pointer
 )
 
 set(ASAN_FLAGS
@@ -46,16 +38,6 @@ function(set_sanitizer_options TARGET)
     )
     target_compile_options(${TARGET} PRIVATE ${SAN_FLAGS})
     target_link_options(${TARGET} PRIVATE ${SAN_FLAGS})
-    if(BRILLIANT_CMAKE_SANITIZER STREQUAL "MSAN")
-      target_link_libraries(${TARGET} PRIVATE c++ c++abi)
-      target_link_directories(
-        ${TARGET} PRIVATE ${BRILLIANT_CMAKE_MSAN_LIBCXX_LIB_DIR}
-      )
-    else()
-      # target_link_options( ${TARGET} PRIVATE
-      # "$<$<BOOL:${CLANGISH}>:-stdlib=libc++>"
-      # ) target_link_libraries(${TARGET} PRIVATE c++ c++abi)
-    endif()
   elseif(NOT BRILLIANT_CMAKE_SANITIZER STREQUAL "")
     message(
       FATAL_ERROR

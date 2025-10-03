@@ -8,35 +8,26 @@ on:
 
 jobs:
   code_coverage:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-24.04]
-        build_type: [Debug]
-        c_compiler: [gcc]
-        include:
-          - os: ubuntu-24.04
-            c_compiler: gcc
-            cpp_compiler: g++
-            shell: bash
-    
+    runs-on: ubuntu-24.04
     steps:
     - name: Install LCOV
       run: sudo apt update && sudo apt install lcov
 
     - uses: actions/checkout@v4
+    - uses: ./.github/actions/project-constants
+      id: constants
     - uses: ./.github/actions/build-project
       with: 
-        c-compiler: ${{ matrix.c_compiler }}
-        cpp-compiler: ${{ matrix.cpp_compiler }}
-        build-type: ${{ matrix.build_type }}
-        shell-name: ${{ matrix.shell }}
-        cmake-config-args: -DBRILLIANT_CMAKE_CODE_COVERAGE=ON
+        c-compiler: gcc
+        cpp-compiler: g++
+        build-type: Debug
+        coverage: true
     
     - name: Run LCOV
       working-directory: ${{ github.workspace }} 
+      #TODO project.dir should be replaced by output directory using project name constant
       run: |
-        lcov -d build/src/CMakeFiles/project.dir -c -o build/coverage.info --branch-coverage
+        lcov -d build/src/CMakeFiles/${{ steps.constants.outputs.project-name }}.dir -c -o build/coverage.info --branch-coverage
         genhtml build/coverage.info -o docs/coverage --branch-coverage
 
     - uses: ./.github/actions/parse-coverage

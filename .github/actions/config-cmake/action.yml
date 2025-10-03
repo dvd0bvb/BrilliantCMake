@@ -9,23 +9,54 @@ inputs:
     description: The CXX compiler being used
     required: true
   build-type:
-    description: Build type
+    description: Build type, one of [Release, Debug, RelWithDebInfo]
     required: true
-  cmake-config-args:
-    description: Additional arguments for Cmake config step
+  sanitizer:
+    description: Sanitizer type, one of [MSAN, TSAN, ASAN]
     required: false
-  shell:
-    description: The shell to run commands in
+  use-libcxx:
+    description: Link to libc++ explicitly
+    required: false 
+    default: false
+  link-static-runtime:
+    description: Statically link the c++ runtime
     required: false
-    default: bash
+    default: false 
+  coverage:
+    description: Configure build with code coverage
+    required: false 
+    default: false
 
 runs:
   using: "composite"
   steps:
-    #assuming repo already checked outd
+    #assuming repo already checked out
     - id: constants
       uses: ./.github/actions/project-constants
       
+    - id: cmake-config-flags
+      run: |
+        FLAGS=${{ steps.constants.outputs.output-type-cmake-flag }}
+        if [[ ${{ inputs.use-libcxx }} = 'true' ]]; then
+          FLAGS="$FLAGS -DBRILLIANT_CMAKE_LINK_LIBCXX=ON -DBRILLIANT_CMAKE_LIBCXX_INCLUDE_DIR=/usr/local/include/libcxx/c++/v1 -DBRILLIANT_CMAKE_LIBCXX_LIB_DIR=/usr/local/lib/libcxx"
+        fi
+        if [[ ${{ inputs.link-static-runtime }} = 'true' ]]; then
+          FLAGS="$FLAGS -DBRILLIANT_CMAKE_LINK_STATIC_RUNTIME=ON"
+        fi
+        if [[ ${{ inputs.sanitizer }} = 'ASAN' ]]; then 
+          FLAGS="$FLAGS -DBRILLIANT_CMAKE_SANITIZER=ASAN"
+        elif [[ ${{ inputs.sanitizer }} = 'TSAN' ]]; then
+          FLAGS="$FLAGS -DBRILLIANT_CMAKE_SANITIZER=TSAN"
+        elif [[ ${{ inputs.sanitizer }} = 'MSAN' ]]; then
+          FLAGS="$FLAGS -DBRILLIANT_CMAKE_SANITIZER=MSAN"
+        elif [[ -n ${{ inputs.sanitizer }} ]]; then 
+          exit 1
+        fi
+        if [[ ${{ inputs.coverage }} = 'true' ]]; then 
+          FLAGS="$FLAGS -DBRILLIANT_CMAKE_CODE_COVERAGE=ON"
+        fi
+        echo "flags=$FLAGS" >> $GITHUB_OUTPUT
+
     - shell: ${{ inputs.shell }}
       working-directory: ${{ github.workspace }}
       run: > 
@@ -33,5 +64,4 @@ runs:
         -DCMAKE_CXX_COMPILER=${{ inputs.cpp-compiler }}
         -DCMAKE_C_COMPILER=${{ inputs.c-compiler }}
         -DCMAKE_BUILD_TYPE=${{ inputs.build-type }}
-        ${{ steps.constants.outputs.output-type-cmake-flag }} 
-        ${{ inputs.cmake-config-args }}
+        ${{ steps.cmake-config-flags.ouputs.flags }}

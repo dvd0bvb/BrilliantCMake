@@ -74,6 +74,29 @@ function(set_compiler_flags TARGET ACCESS)
     "$<$<BOOL:${CLANGISH}>:${CLANG_WARNINGS}>"
     "$<$<BOOL:${GCCISH}>:${GCC_WARNINGS}>"
   )
+  if (${BRILLIANT_CMAKE_LINK_STATIC_RUNTIME})
+    target_link_options(${TARGET} ${ACCESS}
+      "$<$<BOOL:${CLANGISH}>:-static-libstdc++"
+      "$<$<BOOL:${GCCISH}>:-static-libgcc -static-libstdc++"
+    )
+  endif()
+  if(${BRILLIANT_CMAKE_LINK_LIBCXX})
+    target_compile_options(
+      ${TARGET} ${ACCESS} "$<$<BOOL:${CLANGISH}>:-stdlib=libc++"
+    )
+    target_link_options(
+      ${TARGET} ${ACCESS} "$<$<BOOL:${CLANGISH}>:-stdlib=libc++>"
+    )
+    target_link_directories(
+      ${TARGET} ${ACCESS} ${BRILLIANT_CMAKE_LIBCXX_LINK_DIR}
+    )
+    target_include_directories(
+      ${TARGET} ${ACCESS} ${BRILLIANT_CMAKE_LIBCXX_INCLUDE_DIR}
+    )
+    target_link_libraries(
+      ${TARGET} ${ACCESS} libc++abi
+    )
+  endif()
   if(${BRILLIANT_CMAKE_CODE_COVERAGE})
     target_compile_options(${TARGET} ${ACCESS} --coverage)
     target_link_options(${TARGET} ${ACCESS} --coverage)

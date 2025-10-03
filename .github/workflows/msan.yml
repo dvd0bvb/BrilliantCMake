@@ -8,26 +8,13 @@ on:
 
 jobs:
   memory_sanitizer:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-24.04]
-        build_type: [Debug]
-        c_compiler: [clang]
-        include:
-          - os: ubuntu-24.04
-            c_compiler: clang
-            cpp_compiler: clang++
-            shell: bash
-    
+    runs-on: ubuntu-24.04
     steps:
     - uses: actions/checkout@v4
     - uses: ./.github/actions/build-project
       with: 
-        project-name: "project"
-        c-compiler: ${{ matrix.c_compiler }}
-        cpp-compiler: ${{ matrix.cpp_compiler }}
-        build-type: ${{ matrix.build_type }}
-        shell-name: ${{ matrix.shell }}
-        cmake-config-args: -DBRILLIANT_CMAKE_SANITIZER=MSAN -DBRILLIANT_CMAKE_MSAN_LIBCXX_INCLUDE_DIR=/usr/include/libcxx-msan/c++/v1 -DBRILLIANT_CMAKE_MSAN_LIBCXX_LIB_DIR=/usr/lib/libcxx-msan
-        building-msan: "true"
+        c-compiler: clang
+        cpp-compiler: clang++
+        build-type: Debug
+        use-libcxx: true
+        sanitizer: MSAN
