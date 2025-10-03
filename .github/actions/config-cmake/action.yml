@@ -14,6 +14,7 @@ inputs:
   sanitizer:
     description: Sanitizer type, one of [MSAN, TSAN, ASAN]
     required: false
+    default: ""
   use-libcxx:
     description: Link to libc++ explicitly
     required: false 
