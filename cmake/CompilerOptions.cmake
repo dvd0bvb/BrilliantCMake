@@ -94,7 +94,7 @@ function(set_compiler_flags TARGET ACCESS)
       ${TARGET} ${ACCESS} ${BRILLIANT_CMAKE_LIBCXX_INCLUDE_DIR}
     )
     target_link_libraries(
-      ${TARGET} ${ACCESS} libc++abi
+      ${TARGET} ${ACCESS} c++abi
     )
   endif()
   if(${BRILLIANT_CMAKE_CODE_COVERAGE})

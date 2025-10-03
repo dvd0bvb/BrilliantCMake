@@ -28,6 +28,9 @@ inputs:
 runs:
   using: "composite"  
   steps:
+    - id: constants
+      uses: ./.github/actions/project-constants
+
     - name: Use libc++ for Clang
       if: ${{ inputs.use-libcxx == 'true' }}
       uses: dvd0bvb/install-libcxx@v1
@@ -62,7 +65,7 @@ runs:
       run: > 
         cmake --build build 
         --config ${{ inputs.build-type }} 
-        --target all
+        --target ${{ steps.constants.outputs.project-name }}_TEST
       shell: bash
 
     - name: Test
