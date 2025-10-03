@@ -66,5 +66,6 @@ runs:
       shell: bash
 
     - name: Test
-      run: ctest --build-config ${{ inputs.build-type }}
+      working-directory: build/test
+      run: ctest --build-config ${{ inputs.build-type }} --no-tests=error
       shell: bash 
