@@ -57,7 +57,7 @@ runs:
         if [[ ${{ inputs.coverage }} = 'true' ]]; then 
           FLAGS="$FLAGS -DBRILLIANT_CMAKE_CODE_COVERAGE=ON"
         fi
-        echo "flags=$FLAGS" >> $GITHUB_OUTPUT
+        echo "flags=$FLAGS" >> "$GITHUB_OUTPUT"
       shell: bash
 
     - shell: bash
