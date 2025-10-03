@@ -37,10 +37,10 @@ runs:
 
         echo "project-name=$NAME" >> "$GITHUB_OUTPUT"
 
-        if [ "$SHARED" = "true" ]; then
+        if [ "$SHARED" = "True" ]; then
           echo "output-type-cmake-flag=-DBRILLIANT_CMAKE_BUILD_SHARED=ON" >>"$GITHUB_OUTPUT"
-        elif [ "$EXE" = "true" ]; then
+        elif [ "$EXE" = "True" ]; then
           echo "output-type-cmake-flag=-DBRILLIANT_CMAKE_BUILD_EXECUTABLE=ON" >>"$GITHUB_OUTPUT"
-        elif [ "$HEADER_ONLY" = "true" ]; then
+        elif [ "$HEADER_ONLY" = "True" ]; then
           echo "output-type-cmake-flag=-DBRILLIANT_CMAKE_BUILD_HEADER_ONLY=ON" >>"$GITHUB_OUTPUT"
         fi
