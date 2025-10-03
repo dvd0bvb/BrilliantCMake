@@ -29,14 +29,14 @@ runs:
   using: "composite"  
   steps:
     - name: Use libc++ for Clang
-      if: inputs.use-libcxx
+      if: ${{ inputs.use-libcxx }}
       uses: dvd0bvb/install-libcxx@v1
       with:
         libcxx_version: ${{ inputs.libcxx-version }}
         msan: ${{ inputs.sanitizer == 'MSAN' }} 
 
     - name: Install gtest
-      if: inputs.use-libcxx
+      if: ${{ inputs.use-libcxx }}
       uses: dvd0bvb/install-gtest@v1
       with:
         gtest_version: 1.14.0
