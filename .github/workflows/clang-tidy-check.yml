@@ -13,8 +13,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: ./.github/actions/install-gtest
-      with:
-        shell-name: bash
 
     - uses: ./.github/actions/config-cmake
       with: 
@@ -24,5 +22,3 @@ jobs:
         cmake-config-args: -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 
     - uses: ./.github/actions/run-clang-tidy
-      with: 
-        shell-name: bash

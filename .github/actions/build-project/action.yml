@@ -49,7 +49,6 @@ runs:
       with:
         build-type: Release
         dynamic-msvc-runtime: true
-        shell-name: ${{ inputs.shell-name }}
     
     - uses: ./.github/actions/config-cmake
       with: 
