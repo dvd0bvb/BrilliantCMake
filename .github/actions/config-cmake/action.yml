@@ -39,7 +39,7 @@ runs:
       run: |
         FLAGS=${{ steps.constants.outputs.output-type-cmake-flag }}
         if [[ "${{ inputs.use-libcxx }}" = "true" ]]; then
-          FLAGS="$FLAGS -DBRILLIANT_CMAKE_LINK_LIBCXX=ON -DBRILLIANT_CMAKE_LIBCXX_INCLUDE_DIR=/usr/local/include/libcxx/c++/v1 -DBRILLIANT_CMAKE_LIBCXX_LIB_DIR=/usr/local/lib/libcxx"
+          FLAGS="$FLAGS -DBRILLIANT_CMAKE_LINK_LIBCXX=ON -DBRILLIANT_CMAKE_LIBCXX_INCLUDE_DIR=/usr/local/include/libcxx/c++/v1 -DBRILLIANT_CMAKE_LIBCXX_LINK_DIR=/usr/local/lib/libcxx"
         fi
         if [[ ${{ inputs.link-static-runtime }} = "true" ]]; then
           FLAGS="$FLAGS -DBRILLIANT_CMAKE_LINK_STATIC_RUNTIME=ON"

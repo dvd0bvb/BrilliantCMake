@@ -82,7 +82,7 @@ function(set_compiler_flags TARGET ACCESS)
   endif()
   if(${BRILLIANT_CMAKE_LINK_LIBCXX})
     target_compile_options(
-      ${TARGET} ${ACCESS} "$<$<BOOL:${CLANGISH}>:-stdlib=libc++"
+      ${TARGET} ${ACCESS} "$<$<BOOL:${CLANGISH}>:-stdlib=libc++>"
     )
     target_link_options(
       ${TARGET} ${ACCESS} "$<$<BOOL:${CLANGISH}>:-stdlib=libc++>"
