@@ -44,13 +44,14 @@ runs:
         if [[ ${{ inputs.link-static-runtime }} = 'true' ]]; then
           FLAGS="$FLAGS -DBRILLIANT_CMAKE_LINK_STATIC_RUNTIME=ON"
         fi
-        if [[ ${{ inputs.sanitizer }} = 'ASAN' ]]; then 
+
+        if [[ "${{ inputs.sanitizer }}" = 'ASAN' ]]; then 
           FLAGS="$FLAGS -DBRILLIANT_CMAKE_SANITIZER=ASAN"
-        elif [[ ${{ inputs.sanitizer }} = 'TSAN' ]]; then
+        elif "[[ ${{ inputs.sanitizer }}" = 'TSAN' ]]; then
           FLAGS="$FLAGS -DBRILLIANT_CMAKE_SANITIZER=TSAN"
-        elif [[ ${{ inputs.sanitizer }} = 'MSAN' ]]; then
+        elif "[[ ${{ inputs.sanitizer }}" = 'MSAN' ]]; then
           FLAGS="$FLAGS -DBRILLIANT_CMAKE_SANITIZER=MSAN"
-        elif [[ -n ${{ inputs.sanitizer }} ]]; then 
+        elif [[ -n "${{ inputs.sanitizer }}" ]]; then 
           exit 1
         fi
         if [[ ${{ inputs.coverage }} = 'true' ]]; then 
