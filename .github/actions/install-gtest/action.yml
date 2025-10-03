@@ -14,22 +14,19 @@ inputs:
     description: Link the msvc runtime dynamically (default, MD) or statically (MT)
     required: false
     default: true
-  shell-name:
-    description: The shell running this action
-    required: true
 runs: 
   using: "composite"
   steps:
     - name: Install gtest
-      if:  ${{ (! inputs.with-msan) && runner.os != 'Windows' }}
+      if:  ${{ runner.os != 'Windows' }}
       run: sudo apt update && sudo apt install libgtest-dev libgmock-dev
-      shell: ${{ inputs.shell-name }}
+      shell: bash
 
     - name: Build and install gtest
-      if: ${{ ! inputs.with-msan && runner.os == 'Windows' }}
+      if: ${{ runner.os == 'Windows' }}
       run: |
         pushd ${{ github.action_path }}
         .\install-gtest.bat ${{ inputs.tag }} ${{ inputs.build-type }} ${{ inputs.dynamic-msvc-runtime }}
         popd
         echo "CMAKE_PREFIX_PATH=C:/Program Files (x86)/googletest-distribution;$CMAKE_PREFIX_PATH" >> $env:GITHUB_ENV
-      shell: ${{ inputs.shell-name }}
+      shell: pwsh

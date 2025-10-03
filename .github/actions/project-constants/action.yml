@@ -8,7 +8,7 @@ outputs:
 
   output-type-cmake-flag:
     description: The value of the CMake flag which indicates the build type
-    value: ${{ steps.set-output.outputs.output-type-cmake-flag }}
+    value: ${{ steps.set-outputs.outputs.output-type-cmake-flag }}
 
 runs:
   using: "composite"  
@@ -21,9 +21,9 @@ runs:
     - if: runner.os == 'Windows'
       shell: bash
       run: pip install PyYAML
+      shell: bash 
 
     - id: set-outputs
-      working-directory: ${{ github.workspace }}
       shell: bash
       run: |
         yaml() {
