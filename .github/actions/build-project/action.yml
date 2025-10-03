@@ -57,7 +57,6 @@ runs:
         c-compiler: ${{ inputs.c-compiler }}
         build-type: ${{ inputs.build-type }}
         use-libcxx: ${{ inputs.use-libcxx }}
-        libcxx-version: ${{ inputs.libcxx-version }}
         sanitizer: ${{ inputs.sanitizer }}
 
     - name: Build

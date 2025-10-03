@@ -21,7 +21,6 @@ runs:
     - if: runner.os == 'Windows'
       shell: bash
       run: pip install PyYAML
-      shell: bash 
 
     - id: set-outputs
       shell: bash
