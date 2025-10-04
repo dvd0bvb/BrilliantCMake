@@ -67,4 +67,5 @@ runs:
         -DCMAKE_CXX_COMPILER=${{ inputs.cpp-compiler }}
         -DCMAKE_C_COMPILER=${{ inputs.c-compiler }}
         -DCMAKE_BUILD_TYPE=${{ inputs.build-type }}
+        -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
         ${{ steps.cmake-config-flags.outputs.flags }}

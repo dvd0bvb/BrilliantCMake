@@ -25,6 +25,10 @@ inputs:
   sanitizer:
     description: Sanitizer to build with one of [ASAN, TSAN, MSAN] if specified 
     required: false
+  coverage:
+    description: Configure build with code coverage
+    required: false
+    default: false
 runs:
   using: "composite"  
   steps:
@@ -60,6 +64,7 @@ runs:
         build-type: ${{ inputs.build-type }}
         use-libcxx: ${{ inputs.use-libcxx }}
         sanitizer: ${{ inputs.sanitizer }}
+        coverage: ${{ inputs.coverage }}
 
     - name: Build
       run: > 
