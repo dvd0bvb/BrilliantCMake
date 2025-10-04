@@ -54,6 +54,7 @@ runs:
       if: ${{ inputs.use-libcxx == 'false' }}
       uses: ./.github/actions/install-gtest
       with:
+        tag: v1.14.0
         build-type: Release
         dynamic-msvc-runtime: true
     
