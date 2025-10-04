@@ -61,7 +61,7 @@ runs:
     
     - uses: ./.github/actions/config-cmake
       env:
-        GTEST_ROOT: ${{ steps.gtest-install.outputs.gtest-root }}
+        GTEST_ROOT: ${{ steps.install-gtest.outputs.gtest-root }}
       with: 
         cpp-compiler: ${{ inputs.cpp-compiler }}
         c-compiler: ${{ inputs.c-compiler }}

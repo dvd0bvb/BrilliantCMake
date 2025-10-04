@@ -37,6 +37,4 @@ runs:
       id: windows-gtest
       if: ${{ runner.os == 'Windows' }}
       shell: bash
-      run: |
-        echo "gtest-root=${{ github.action_path }}/googletest/install"
-        echo "gtest-root=${{ github.action_path }}/googletest/install" >> "$GITHUB_OUTPUT"
+      run: echo "gtest-root=${{ github.action_path }}/googletest/install" >> "$GITHUB_OUTPUT"
