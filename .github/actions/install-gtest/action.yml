@@ -34,5 +34,5 @@ runs:
         pushd ${{ github.action_path }}
         .\install-gtest.bat ${{ inputs.tag }} ${{ inputs.build-type }} ${{ inputs.dynamic-msvc-runtime }}
         popd
-        "gtest-root=${{ github.action_path }}\googletest\install" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+        echo "gtest-root=${{ github.action_path }}\googletest\install" >> $env:GITHUB_OUTPUT
       shell: pwsh
