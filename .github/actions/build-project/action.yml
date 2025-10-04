@@ -71,7 +71,6 @@ runs:
         coverage: ${{ inputs.coverage }}
 
     - name: Build
-      if: ${{ runner.os != 'Windows' }}
       run: > 
         cmake --build build 
         --config ${{ inputs.build-type }}
