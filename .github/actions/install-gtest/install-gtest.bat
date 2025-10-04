@@ -7,8 +7,6 @@ set DYNAMIC_RUNTIME=%3
 
 git clone https://github.com/google/googletest.git --branch %BRANCH% --depth 1
 pushd googletest
-mkdir build
-pushd build
 
 echo %DYNAMIC_RUNTIME%
 if "%DYNAMIC_RUNTIME%"=="true" (
@@ -16,6 +14,6 @@ if "%DYNAMIC_RUNTIME%"=="true" (
 ) else (
     set RUNTIME_FLAG=
 )
-cmake .. -DCMAKE_BUILD_TYPE=%BUILD_TYPE% -G "NMake Makefiles" %RUNTIME_FLAG%
-cmake --build . --config %BUILD_TYPE%
-cmake --install . --config %BUILD_TYPE%
+cmake .. -DCMAKE_BUILD_TYPE=%BUILD_TYPE% -G "NMake Makefiles" %RUNTIME_FLAG% -DCMAKE_INSTALL_PREFIX=%~dp0\googletest
+cmake --build build --config %BUILD_TYPE%
+cmake --install build --config %BUILD_TYPE%
