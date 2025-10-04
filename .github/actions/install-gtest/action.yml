@@ -29,12 +29,14 @@ runs:
 
     - name: Build and install gtest
       if: ${{ runner.os == 'Windows' }}
-      run: |
-        pushd ${{ github.action_path }}
-        .\install-gtest.bat ${{ inputs.tag }} ${{ inputs.build-type }} ${{ inputs.dynamic-msvc-runtime }}
-        popd        
+      working-directory: ${{ github.action_path }}
+      run: .\install-gtest.bat ${{ inputs.tag }} ${{ inputs.build-type }} ${{ inputs.dynamic-msvc-runtime }}
       shell: pwsh
 
-    - id: windows-gtest
+    - name: Setting gtest-root
+      id: windows-gtest
+      if: ${{ runner.os == 'Windows' }}
       shell: bash
-      run: echo "gtest-root=${{ github.action_path }}/googletest/install" >> "$GITHUB_OUTPUT"
+      run: |
+        echo "gtest-root=${{ github.action_path }}/googletest/install"
+        echo "gtest-root=${{ github.action_path }}/googletest/install" >> "$GITHUB_OUTPUT"

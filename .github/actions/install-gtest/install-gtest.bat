@@ -14,6 +14,6 @@ if "%DYNAMIC_RUNTIME%"=="true" (
 ) else (
     set RUNTIME_FLAG=
 )
-cmake -B build -S . -DCMAKE_BUILD_TYPE=%BUILD_TYPE% -G "NMake Makefiles" %RUNTIME_FLAG% -DCMAKE_INSTALL_PREFIX=%~dp0\install
+cmake -B build -S . -DCMAKE_BUILD_TYPE=%BUILD_TYPE% -G "NMake Makefiles" %RUNTIME_FLAG% -DCMAKE_INSTALL_PREFIX=%~dp0install
 cmake --build build --config %BUILD_TYPE%
 cmake --install build --config %BUILD_TYPE%
