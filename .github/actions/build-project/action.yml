@@ -84,6 +84,7 @@ runs:
         -G "Visual Studio 17 2022"
         --config ${{ inputs.build-type }}
         --target ${{ steps.constants.outputs.project-name }}_TEST 
+      shell: bash 
 
     - name: Test
       working-directory: build/test
