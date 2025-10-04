@@ -14,6 +14,11 @@ inputs:
     description: Link the msvc runtime dynamically (default, MD) or statically (MT)
     required: false
     default: true
+outputs:
+  gtest-root:
+    description: Root of googletest install
+    value: ${{ steps.windows-gtest.outputs.gtest-root }}
+
 runs: 
   using: "composite"
   steps:
@@ -24,9 +29,10 @@ runs:
 
     - name: Build and install gtest
       if: ${{ runner.os == 'Windows' }}
+      id: windows-gtest
       run: |
         pushd ${{ github.action_path }}
         .\install-gtest.bat ${{ inputs.tag }} ${{ inputs.build-type }} ${{ inputs.dynamic-msvc-runtime }}
         popd
-        echo "CMAKE_PREFIX_PATH=${{ github.action_path }}\googletest\install;$CMAKE_PREFIX_PATH" >> $env:GITHUB_ENV
+        "gtest-root=${{ github.action_path }}\googletest\install" -Out-File -FilePath $env:GITHUB_OUTPUT -Append
       shell: pwsh
