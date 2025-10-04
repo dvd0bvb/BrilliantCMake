@@ -61,6 +61,7 @@ runs:
       shell: bash
 
     - shell: bash
+      if: ${{ runner.os != 'Windows' }}
       working-directory: ${{ github.workspace }}
       run: > 
         cmake -B build -S .
@@ -68,4 +69,12 @@ runs:
         -DCMAKE_C_COMPILER=${{ inputs.c-compiler }}
         -DCMAKE_BUILD_TYPE=${{ inputs.build-type }}
         -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+        ${{ steps.cmake-config-flags.outputs.flags }}
+
+    - shell: bash
+      if: ${{ runner.os == 'Windows' }}
+      working-directory: ${{ github.workspace }}
+      run: >
+        cmake -B build -S .
+        -G "Visual Studio 17 2022"
         ${{ steps.cmake-config-flags.outputs.flags }}
