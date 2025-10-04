@@ -28,5 +28,5 @@ runs:
         pushd ${{ github.action_path }}
         .\install-gtest.bat ${{ inputs.tag }} ${{ inputs.build-type }} ${{ inputs.dynamic-msvc-runtime }}
         popd
-        echo "CMAKE_PREFIX_PATH=${{ github.action_path }}\install;$CMAKE_PREFIX_PATH" >> $env:GITHUB_ENV
+        echo "CMAKE_PREFIX_PATH=${{ github.action_path }}\googletest\install;$CMAKE_PREFIX_PATH" >> $env:GITHUB_ENV
       shell: pwsh
