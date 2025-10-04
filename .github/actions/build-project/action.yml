@@ -71,11 +71,19 @@ runs:
         coverage: ${{ inputs.coverage }}
 
     - name: Build
+      if: ${{ runner.os != 'Windows' }}
       run: > 
         cmake --build build 
-        --config ${{ inputs.build-type }} 
         --target ${{ steps.constants.outputs.project-name }}_TEST
       shell: bash
+
+    - name: Build 
+      if: ${{ runner.os == 'Windows' }}
+      run: > 
+        cmake --build build
+        -G "Visual Studio 17 2022"
+        --config ${{ inputs.build-type }}
+        --target ${{ steps.constants.outputs.project-name }}_TEST 
 
     - name: Test
       working-directory: build/test
