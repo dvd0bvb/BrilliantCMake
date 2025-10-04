@@ -15,7 +15,8 @@ elseif(BRILLIANT_CMAKE_BUILD_SHARED)
     ${PROJECT_NAME}
     PROPERTIES VERSION ${CMAKE_PROJECT_VERSION}
                SOVERSION ${CMAKE_PROJECT_VERSION_MAJOR}
-               "$<$<BOOL:${MSVCISH}>:WINDOWS_EXPORT_ALL_SYMBOLS ON>"
+               # doesn't affect non-windows builds
+               WINDOWS_EXPORT_ALL_SYMBOLS ON
   )
 else()
   add_library(${PROJECT_NAME} ${MAIN_TARGET_SOURCES})
