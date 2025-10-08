@@ -41,8 +41,8 @@ jobs:
         working-directory: ${{ github.workspace }}
         run: |
           WARNINGS_FILE=build/docs/dox_warnings.log
-          COLORS_JSON=.github/badges/colors.json
-          OUT_FILE=.github/badges/doxygen.json
+          COLORS_JSON=./.github/badges/colors.json
+          OUT_FILE=./.github/badges/doxygen.json
 
           if [[ ${{ steps.build.outputs.exit-code }} != "0" ]]; then
             MESSAGE=Failed
