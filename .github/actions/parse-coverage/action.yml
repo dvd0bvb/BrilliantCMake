@@ -30,8 +30,6 @@ runs:
       run: |
         pip install -r requirements.txt
         JSON_DATA=$(python3 parse-coverage.py ${{ inputs.lcov-file }})
-        echo "lines=$(python3 parse-stat.py "$JSON_DATA" lines)" >> "$GITHUB_OUTPUT"
-        echo "functions=$(python3 parse-stat.py "$JSON_DATA" functions)" >> "$GITHUB_OUTPUT"
-        echo "branches=$(python3 parse-stat.py "$JSON_DATA" branches)" >> "$GITHUB_OUTPUT"
-      
-      
+        echo "lines=$(echo $JSON_DATA | jq '.lines')" >> "$GITHUB_OUTPUT"
+        echo "functions=$(echo $JSON_DATA | jq '.functions')" >> "$GITHUB_OUTPUT"
+        echo "branches=$(echo $JSON_DATA | jq '.branches')" >> "$GITHUB_OUTPUT"

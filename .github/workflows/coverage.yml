@@ -31,7 +31,6 @@ jobs:
     
     - name: Run LCOV
       working-directory: ${{ github.workspace }} 
-      #TODO project.dir should be replaced by output directory using project name constant
       run: |
         lcov -d build/src/CMakeFiles/${{ steps.constants.outputs.project-name }}.dir -c -o build/coverage.info --branch-coverage
         genhtml build/coverage.info -o docs/coverage --branch-coverage
@@ -42,11 +41,30 @@ jobs:
         lcov-file: ${{ github.workspace }}/build/coverage.info
 
     - working-directory: ${{ github.workspace }}
-      run: >
-        curl $(python3 .github/actions/parse-coverage/make-shield-url.py 
-        "${{ steps.stats.outputs.line-percent }} ${{ steps.stats.outputs.function-percent }} ${{ steps.stats.outputs.branch-percent }}" 
-        95 85)
-        > ${{ github.workspace }}/img/coverage.svg
+      run: |
+        min_number() {
+          printf "%s\n" "$@" | sort -g | head -n1
+        }
+
+        COLORS_JSON=.github/badges/coverage.json
+        OUT_FILE=.github/badges/colors.json
+        LINES=${{ steps.stats.outputs.line-percent }}
+        FUNCTIONS=${{ steps.stats.outputs.function-percent }}
+        BRANCHES=${{ steps.stats.outputs.branch-percent }}
+
+        MIN=$(min_number $LINES $FUNCTIONS $BRANCHES)
+        if [[ $((MIN < 85)) ]]; then 
+          COLOR_NAME=error
+        elif [[ $((MIN < 95))]]; then
+          COLOR_NAME=warning
+        else
+          COLOR_NAME=good
+        fi
+        COLOR="$(jq .$COLOR_NAME $COLORS_JSON)"
+        MESSAGE="L: $LINES F: $FUNCTIONS B: $BRANCHES"
+
+        jq ".color = $COLOR | .message = \"$MESSAGE\"" $OUT_FILE > json.tmp
+        mv json.tmp $OUT_FILE
 
     - uses: oleksiyrudenko/gha-git-credentials@v2-latest
       with:
@@ -56,8 +74,8 @@ jobs:
       shell: bash
       continue-on-error: true
       run: |
-        RESULT=$(git diff ${{ github.workspace }}/img/coverage.svg)
+        RESULT=$(git diff .github/badges/coverage.json)
         if [ ! -z "$RESULT" ]; then
-        git commit ${{ github.workspace }}/img/coverage.svg -m '[skip ci] updated coverage badge from CI action'
-        git push
+          git commit .github/badges/coverage.json -m '[skip ci] updated coverage json from CI action'
+          git push
         fi
