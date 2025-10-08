@@ -54,7 +54,7 @@ jobs:
 
         MIN=$(min_number $LINES $FUNCTIONS $BRANCHES)
         if [[ $((MIN < 85)) ]]; then 
-          COLOR_NAME=error
+          COLOR_NAME=critical
         elif [[ $((MIN < 95)) ]]; then
           COLOR_NAME=warning
         else
