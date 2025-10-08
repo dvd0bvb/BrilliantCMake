@@ -38,6 +38,7 @@ jobs:
           cmake --build build --target ${{ steps.constants.outputs.project-name }}_DOCS
 
       - name: Count Warnings
+        working-directory: ${{ github.workspace }}
         run: |
           WARNINGS_FILE=build/docs/dox_warning.log
           COLORS_JSON=.github/badges/colors.json
@@ -61,7 +62,7 @@ jobs:
           fi
           COLOR="$(cat $COLOR_JSON | jq .$COLOR_NAME)"
 
-          cat $OUT_FILE | jq ".color = $COLOR | .message = $MESSAGE" > $OUT_FILE
+          cat $OUT_FILE | jq ".color = $COLOR | .message = \"$MESSAGE\"" > $OUT_FILE
 
       - uses: oleksiyrudenko/gha-git-credentials@v2-latest
         with:
@@ -69,6 +70,7 @@ jobs:
 
       - name: Push doxygen json
         continue-on-error: true
+        working-directory: ${{ github.workspace }}
         run: |
           RESULT=$(git diff .github/badges/doxygen.json)
           if [ ! -z "$RESULT" ]; then
