@@ -60,9 +60,9 @@ jobs:
             MESSAGE="No warning file?"
             COLOR_NAME=warning
           fi
-          COLOR="$(cat $COLORS_JSON | jq .$COLOR_NAME)"
+          COLOR="$(jq .$COLOR_NAME $COLORS_JSON)"
 
-          cat $OUT_FILE | jq ".color = $COLOR | .message = \"$MESSAGE\"" > $OUT_FILE
+          jq ".color = $COLOR | .message = \"$MESSAGE\"" $OUT_FILE > $OUT_FILE
 
       - uses: oleksiyrudenko/gha-git-credentials@v2-latest
         with:
