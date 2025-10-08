@@ -46,8 +46,8 @@ jobs:
           printf "%s\n" "$@" | sort -g | head -n1
         }
 
-        COLORS_JSON=.github/badges/coverage.json
-        OUT_FILE=.github/badges/colors.json
+        COLORS_JSON=.github/badges/colors.json
+        OUT_FILE=.github/badges/coverage.json
         LINES=${{ steps.stats.outputs.line-percent }}
         FUNCTIONS=${{ steps.stats.outputs.function-percent }}
         BRANCHES=${{ steps.stats.outputs.branch-percent }}
