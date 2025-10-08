@@ -53,9 +53,9 @@ jobs:
         BRANCHES=${{ steps.stats.outputs.branch-percent }}
 
         MIN=$(min_number $LINES $FUNCTIONS $BRANCHES)
-        if [[ $((MIN < 85)) ]]; then 
+        if (( MIN < 85 )); then 
           COLOR_NAME=critical
-        elif [[ $((MIN < 95)) ]]; then
+        elif (( MIN < 95 )); then
           COLOR_NAME=warning
         else
           COLOR_NAME=good
