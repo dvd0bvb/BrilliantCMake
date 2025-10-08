@@ -2,8 +2,15 @@ name: clang-format Check
 on: 
   push: 
     branches: [ main ]
+    paths-ignore: 
+      - .github/badges/**
+      - README.md
   pull_request:
     branches: [ main ] 
+    paths-ignore: 
+      - .github/badges/**
+      - README.md
+      
 jobs:
   formatting-check:
     name: Formatting Check

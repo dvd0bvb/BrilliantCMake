@@ -3,8 +3,14 @@ name: clang-tidy check
 on:
   push:
     branches: [ main ]
+    paths-ignore: 
+      - .github/badges/**
+      - README.md
   pull_request:
     branches: [ main ]
+    paths-ignore: 
+      - .github/badges/**
+      - README.md
 
 jobs:
   setup-and-tidy:

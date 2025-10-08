@@ -1,5 +1,14 @@
 name: cmake-format Check
-on: [push, pull_request]
+on: 
+  push:
+    paths-ignore: 
+      - .github/badges/**
+      - README.md
+  pull_request:
+    paths-ignore: 
+      - .github/badges/**
+      - README.md
+      
 jobs:
   formatting-check:
     runs-on: ubuntu-latest

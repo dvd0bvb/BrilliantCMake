@@ -1,0 +1,73 @@
+name: Doxygen
+
+on:
+  push:
+    branches: [ "main" ]
+    paths-ignore: 
+      - .github/badges/**
+      - README.md
+  pull_request:
+    branches: [ "main" ]
+    paths-ignore: 
+      - .github/badges/**
+      - README.md
+
+jobs:
+  code_coverage:
+    runs-on: ubuntu-24.04
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/project-constants
+        id: constants
+      - name: Configure
+        uses: ./.github/actions/config-cmake
+        with:
+          c-compiler: gcc
+          cpp-compiler: g++
+          build-type: Release
+      
+      - name: Build Doxygen
+        id: build
+        run: |
+          trap "echo exit-code=$? >> $GITHUB_OUTPUT" EXIT
+          cmake --build build --target ${{ steps.constants.outputs.project-name }}_DOCS
+
+      - name: Count Warnings
+        run: |
+          WARNINGS_FILE=build/docs/dox_warning.log
+          COLORS_JSON=.github/badges/colors.json
+          OUT_FILE=.github/badges/doxygen.json
+
+          if [[ ${{ steps.build.outputs.exit-code }} != "0" ]]; then
+            MESSAGE=Failed
+            COLOR_NAME=error
+          elif [[ -f $WARNINGS_FILE ]]; then
+            NUM="$(wc -l $WARNINGS_FILE | awk '{print $1}')"
+            if [[ $NUM != "0" ]]; then
+              MESSAGE="Warnings: $NUM"
+              COLOR_NAME=warning
+            else
+              MESSAGE="No warnings"
+              COLOR_NAME=good
+            fi
+          else
+            MESSAGE="No warning file?"
+            COLOR_NAME=warning
+          fi
+          COLOR="$(cat $COLOR_JSON | jq .$COLOR_NAME)"
+
+          cat $OUT_FILE | jq ".color = $COLOR | .message = $MESSAGE" > $OUT_FILE
+
+      - uses: oleksiyrudenko/gha-git-credentials@v2-latest
+        with:
+          token: ${{ github.token }}
+
+      - name: Push doxygen json
+        continue-on-error: true
+        run: |
+          RESULT=$(git diff .github/badges/doxygen.json)
+          if [ ! -z "$RESULT" ]; then
+            git commit .github/badges/doxygen.json -m '[skip ci] updated doxygen json from CI action'
+            git push
+          fi
