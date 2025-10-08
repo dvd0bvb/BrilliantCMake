@@ -62,7 +62,8 @@ jobs:
           fi
           COLOR="$(jq .$COLOR_NAME $COLORS_JSON)"
 
-          jq ".color = $COLOR | .message = \"$MESSAGE\"" $OUT_FILE > $OUT_FILE
+          jq ".color = $COLOR | .message = \"$MESSAGE\"" $OUT_FILE > json.tmp
+          mv json.tmp $OUT_FILE
 
       - uses: oleksiyrudenko/gha-git-credentials@v2-latest
         with:
