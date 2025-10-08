@@ -60,7 +60,7 @@ jobs:
             MESSAGE="No warning file?"
             COLOR_NAME=warning
           fi
-          COLOR="$(cat $COLOR_JSON | jq .$COLOR_NAME)"
+          COLOR="$(cat $COLORS_JSON | jq .$COLOR_NAME)"
 
           cat $OUT_FILE | jq ".color = $COLOR | .message = \"$MESSAGE\"" > $OUT_FILE
 
