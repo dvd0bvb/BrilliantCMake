@@ -42,6 +42,9 @@ runs:
         libcxx_version: ${{ inputs.libcxx-version }}
         msan: ${{ inputs.sanitizer == 'MSAN' }}
 
+    - name: Install doxygen
+      uses: ssciwr/doxygen-install@v1
+
     - name: Install gtest
       if: ${{ inputs.use-libcxx == 'true' }}
       uses: dvd0bvb/install-gtest@v1

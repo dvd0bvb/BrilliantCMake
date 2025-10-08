@@ -19,6 +19,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: ./.github/actions/install-gtest
+    - uses: ssciwr/doxygen-install@v1
 
     - uses: ./.github/actions/config-cmake
       with: 

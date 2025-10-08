@@ -13,13 +13,17 @@ on:
       - README.md
 
 jobs:
-  code_coverage:
+  doxygen:
     runs-on: ubuntu-24.04
     continue-on-error: true
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/project-constants
         id: constants
+
+      - uses: ./.github/actions/install-gtest
+      - uses: ssciwr/doxygen-install@v1
+
       - name: Configure
         uses: ./.github/actions/config-cmake
         with:
