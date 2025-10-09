@@ -23,8 +23,6 @@ namespace project {
     if (n % buzz_divizor == 0) {
       ss << "Buzz";
     }
-    int i[10];
-    i[11];
     return ss.str();
   }
 }  // namespace project
