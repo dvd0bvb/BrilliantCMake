@@ -3,8 +3,14 @@ name: Memory Sanitizer
 on:
   push:
     branches: [ "main" ]
+    paths-ignore: 
+      - .github/badges/**
+      - README.md
   pull_request:
     branches: [ "main" ]
+    paths-ignore: 
+      - .github/badges/**
+      - README.md
 
 jobs:
   memory_sanitizer:

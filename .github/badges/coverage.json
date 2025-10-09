@@ -1,4 +1,6 @@
 {
+  "schemaVersion": 1,
+  "label": "Test Coverage",
   "message": "L: 100 F: 100 B: 100",
   "color": "43ad43"
 }
