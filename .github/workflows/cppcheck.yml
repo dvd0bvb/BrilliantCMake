@@ -37,8 +37,8 @@ jobs:
         fi
         COLOR="$(jq .$COLOR_NAME $COLORS_JSON)"
 
-        echo "\".color = $COLOR | .message = \"$MESSAGE\"\" $OUT_FILE"
-        jq ".color = $COLOR | .message = \"$MESSAGE\"" $OUT_FILE > json.tmp
+        echo "\".color = \"$COLOR\" | .message = \"$MESSAGE\"\" $OUT_FILE"
+        jq ".color = \"$COLOR\" | .message = \"$MESSAGE\"" $OUT_FILE > json.tmp
         mv json.tmp $OUT_FILE
         rm cppcheck_report.txt
 

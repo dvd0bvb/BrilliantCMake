@@ -17,6 +17,7 @@ For these small concessions you get:
   - Memory sanitizer
   - Thread sanitizer
   - clang-tidy
+  - cppcheck
 - C++ code formatting using clang-format
 - CMake formatting using cmake-format
 - All of this running in Github workflows with fancy badges for your documentation
