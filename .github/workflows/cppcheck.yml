@@ -43,7 +43,7 @@ jobs:
         rm cppcheck_report.txt
 
     - name: Push cppcheck json
-      uses: mikeal/publish-to-github-action@1.0.0
+      uses: mikeal/publish-to-github-action@master
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         BRANCH_NAME: 'main'
