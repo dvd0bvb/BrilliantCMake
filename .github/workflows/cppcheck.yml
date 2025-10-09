@@ -40,13 +40,10 @@ jobs:
         echo "\".color = $COLOR | .message = \"$MESSAGE\"\" $OUT_FILE"
         jq ".color = $COLOR | .message = \"$MESSAGE\"" $OUT_FILE > json.tmp
         mv json.tmp $OUT_FILE
+        rm cppcheck_report.txt
 
     - name: Push cppcheck json
-      continue-on-error: true
-      working-directory: ${{ github.workspace }}
-      run: |
-        RESULT=$(git diff .github/badges/cppcheck.json)
-        if [ ! -z "$RESULT" ]; then
-          git commit .github/badges/cppcheck.json -m '[skip ci] updated cppcheck json from CI action'
-          git push
-        fi
+      uses: mikeal/publish-to-github-action@1.0.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        BRANCH_NAME: 'main'
