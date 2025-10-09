@@ -1,0 +1,23 @@
+name: Cppcheck
+
+on:
+  push:
+    branches: [ "main" ]
+    paths-ignore: 
+      - .github/badges/**
+      - README.md
+  pull_request:
+    branches: [ "main" ]
+    paths-ignore: 
+      - .github/badges/**
+      - README.md
+
+jobs:
+  cppcheck:
+    runs-on: ubuntu-24.04
+    steps:
+    - uses: actions/checkout@v4
+    - name: cppcheck
+      uses: deep5050/cppcheck-action@main
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN}}
