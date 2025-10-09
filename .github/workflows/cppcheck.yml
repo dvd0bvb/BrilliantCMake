@@ -26,7 +26,7 @@ jobs:
       run: |
         COLORS_JSON=./.github/badges/colors.json
         OUT_FILE=./.github/badges/cppcheck.json
-        NUM_ERRORS=$(grep -c "error" cppcheck_error.txt)
+        NUM_ERRORS=$(grep -c "error" ${{ github.workspace}}/cppcheck_error.txt)
         
         if [[ $NUM_ERRORS != "0" ]]; then
           COLOR_NAME=critical
