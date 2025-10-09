@@ -1,4 +1,6 @@
 {
+  "schemaVersion": 1,
+  "label": "cppcheck",
   "message": "Errors: 2",
   "color": "ff5252"
 }
